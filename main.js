@@ -1,5 +1,5 @@
 var bodies = [];
-const c = 6; //3
+const c = 4; //3,6,12,300
 var referenceObject;
 var camOffset;
 var keyboard = {
@@ -9,7 +9,9 @@ var keyboard = {
     downArrPressed: false,
     spacePressed: false,
 }
+
 var SHOW_CURSOR = true;
+var zoom = 1;
 
 function setup() {
     createCanvas(windowWidth, windowHeight);
@@ -67,6 +69,54 @@ function keyPressed() {
         return false;
     }
   };
+
+  function mouseWheel(event){
+    // let oldZoom = zoom;
+    // zoom += event.delta / 1000;
+    // console.log(event.delta, zoom);
+    // if(zoom > maxZoom){zoom = maxZoom}
+    // if(zoom < minZoom){zoom = minZoom}
+    // if(oldZoom != zoom){
+        
+    // }
+
+    dir = event.delta/Math.abs(event.delta);
+
+    if(dir == 1 && zoom >= 1){
+        zoom += 0.1;
+    }
+    if(dir == -1 && zoom > 1){
+        zoom += -0.1;
+    }
+    if(dir == -1 && zoom >= 0 && zoom <= 1){
+        zoom += - 0.1;
+    }
+    if(dir == 1 && zoom >= 0 && zoom <= 1){
+        zoom += 0.1;
+    }
+    if(zoom <=0){
+        zoom = 0.1;
+    }
+
+    // if(dir >= 1){
+    //     zoom += 1;
+    // } else if(dir <= -1){
+    //     if(zoom <=1 && zoom >=0){
+    //         zoom -= 2**(zoom**(-1));
+    //     }else{
+    //         zoom += -1;
+    //     }
+    // } else if(zoom < 1 && zoom > 0){
+    //     zoom -= 2**(zoom**(-1));
+    // } else {
+    //     zoom = 1;
+    // }
+
+    console.log(dir + ", " + zoom);
+    
+    
+    //zoom += dir * (1)**dir; //10 - это насколько быстро будет менятся зум
+  }
 
 function relativeVelocity(VelOfTargetPoint, referencePointVel){
     var resultX = (VelOfTargetPoint.x - referencePointVel.x) / (1 - (VelOfTargetPoint.x*referencePointVel.x) / (c**2));

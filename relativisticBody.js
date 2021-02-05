@@ -51,9 +51,11 @@ class RelatavisticBody {
             // if(this.vel.mag() != 0){
             //     scale(this.gamma.x, this.gamma.y);
             // }
+
+            scale(zoom, zoom); //приближение или отдаление
             beginShape();
             this.geometry.shape.forEach(vert => {
-                vertex((vert[0] * this.scale) / this.gamma.x  - (referenceObject.pos.x - this.pos.x) * (1 - 1/this.gamma.x), (vert[1] * this.scale) / this.gamma.y  - (referenceObject.pos.y - this.pos.y) * (1 - 1/this.gamma.y));
+                vertex((vert[0] * this.scale) / this.gamma.x  - (referenceObject.pos.x - this.pos.x) * (1 - 1/this.gamma.x) - (referenceObject.pos.x - this.pos.x) * zoom, (vert[1] * this.scale) / this.gamma.y  - (referenceObject.pos.y - this.pos.y) * (1 - 1/this.gamma.y) - (referenceObject.pos.y - this.pos.y) * zoom);
             });
             endShape(CLOSE);
             pop();
@@ -62,3 +64,6 @@ class RelatavisticBody {
         }
     }
 }
+
+
+//vertex((vert[0] * this.scale) / this.gamma.x  - (referenceObject.pos.x - this.pos.x) * (1 - 1/this.gamma.x) - (referenceObject.pos.x - this.pos.x) * (1-zoom), (vert[1] * this.scale) / this.gamma.y  - (referenceObject.pos.y - this.pos.y) * (1 - 1/this.gamma.y) - (referenceObject.pos.y - this.pos.y) * (1 - zoom));
