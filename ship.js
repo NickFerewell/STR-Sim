@@ -37,8 +37,8 @@ class Ship extends RelatavisticBody{
         fill(255, 100, 100);
         textSize(13);
         stroke(1);
-        text("Vx: " + Math.floor(this.vel.x/c*100) + "% of c", width/2 + 20, height/2 - 20); //сделать либо в углу экрана, либо рисовать в основном классе и сделать специальное место для текста в геометрии.
-        text("Vy: " + Math.floor(this.vel.y/c*100) + "% of c", width/2 + 20, height/2 - 8);
+        text("Vx: " + Math.floor(Math.abs(this.vel.x)/c*100) + "% of c", width/2 + 20, height/2 - 20); //сделать либо в углу экрана, либо рисовать в основном классе и сделать специальное место для текста в геометрии.
+        text("Vy: " + Math.floor(Math.abs(this.vel.y)/c*100) + "% of c", width/2 + 20, height/2 - 8);
         pop();
     }
 

@@ -1,3 +1,7 @@
+function windowResized() { //Чтобы предостеречь читерство задать ширину и высоту экрана постоянными?
+  resizeCanvas(windowWidth, windowHeight);
+}
+
 function drawWorld(){
 	camOffsetX = referenceObject.pos.x - width/2;
     camOffsetY = referenceObject.pos.y - height/2;
