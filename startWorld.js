@@ -5,7 +5,9 @@ function startWorld() {
     new Asteroid(createVector(400, 400),createVector(0,0));
     new Asteroid(createVector(200,200), createVector(-1,0));
 
-    for(var i = 0; i < 16 * 2; i++){
-        new Asteroid(createVector(random(width), random(height)), createVector(2,0.8));
+    for(var i = 0; i < 160; i++){
+        new Asteroid(createVector(random(-width * 10, width * 10), random(-height * 10, height * 10)), p5.Vector.random2D());         //Здесь игра должна загружать карту из сохранениея, ну или хотя бы состояние игры, корабля, настроек и т.д.
     }
+
+    generateBackgroundUniverse();
 }

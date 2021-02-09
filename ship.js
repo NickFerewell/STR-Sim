@@ -37,17 +37,13 @@ class Ship extends RelatavisticBody{
         fill(255, 100, 100);
         textSize(13);
         stroke(1);
-        text("V: " + Math.floor(this.vel.mag()/c*100) + "% of c", width/2 + 20, height/2 - 20); //сделать либо в углу экрана, либо рисовать в основном классе и сделать специальное место для текста в геометрии.
+        text("Vx: " + Math.floor(this.vel.x/c*100) + "% of c", width/2 + 20, height/2 - 20); //сделать либо в углу экрана, либо рисовать в основном классе и сделать специальное место для текста в геометрии.
+        text("Vy: " + Math.floor(this.vel.y/c*100) + "% of c", width/2 + 20, height/2 - 8);
         pop();
     }
 
     boost(){
         var force = p5.Vector.fromAngle(this.rotation - PI/2);
-        // var accX = force.x / (this.mass * this.gamma.x);
-        // var accY = force.y / (this.mass * this.gamma.y);
-        // var acc = createVector(accX, accY);
-
-        // var acc = force.div(this.mass * this.gamma.vector.mag()**3);
 
         var accX = ((force.x - (this.vel.x**2 * force.x) / c**2)) / (this.mass * this.gamma.x);
         var accY = ((force.y - (this.vel.y**2 * force.y) / c**2)) / (this.mass * this.gamma.y);

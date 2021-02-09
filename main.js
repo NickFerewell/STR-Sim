@@ -12,21 +12,35 @@ var keyboard = {
 
 var SHOW_CURSOR = true;
 var zoom = 1;
+var screenMaxFPS = 60;
+var currentFPS;
+var lastLoop; //время в миллисекундах на последнем кадре
+var thisLoop; //время в миллисекундах на этом кадре
+var canvWidth;
+var canvHeight;
+var zoomDelta = 0.01;
+var minZoom = 0.2; //дальше звёзды на фоне пропадают
+var maxZoom = 5; // maxZoom = 1/minZoom
 
 function setup() {
-    createCanvas(windowWidth, windowHeight);
+    canvWidth = windowWidth;
+    canvHeight = windowHeight;
+    createCanvas(canvWidth, canvHeight);
+    frameRate(screenMaxFPS);
+
+    lastLoop = new Date(); 
+
     startWorld();
 }
 
 function draw() {
-    background(0);
-    push();
-    strokeWeight(5);
-    stroke(255);
-    line(0 - camOffset.x,7000 - camOffset.y,0 - camOffset.x,-7000 + camOffset.y);
-    line(-7000 - camOffset.x, 0 - camOffset.y, 7000 - camOffset.x, 0 - camOffset.y); //перенести в worldDraw()
-    pop();
+    thisLoop = new Date(); //время в начале цикла в миллисекундах
+
     updateWorld();
+    drawWorld();
+
+    currentFPS = (1000 / (thisLoop - lastLoop)).toFixed(0); //FPS на предыдушем кадре%)
+    lastLoop = thisLoop;
 }
 
 function keyReleased() {
@@ -65,7 +79,7 @@ function keyPressed() {
     } else {
         noCursor();
     }
-    if(keyCode != 116){
+    if(keyCode != 116 && keyCode != 123){ //116-f5, 123-f12, 
         return false;
     }
   };
@@ -82,21 +96,24 @@ function keyPressed() {
 
     dir = event.delta/Math.abs(event.delta);
 
-    if(dir == 1 && zoom >= 1){
-        zoom += 0.1;
-    }
-    if(dir == -1 && zoom > 1){
-        zoom += -0.1;
-    }
-    if(dir == -1 && zoom >= 0 && zoom <= 1){
-        zoom += - 0.1;
-    }
-    if(dir == 1 && zoom >= 0 && zoom <= 1){
-        zoom += 0.1;
-    }
-    if(zoom <=0){
-        zoom = 0.1;
-    }
+    zoom = clamp(zoom + dir * zoomDelta, minZoom, maxZoom);
+    
+
+    // if(dir == 1 && zoom >= 1){
+    //     zoom += 0.1;
+    // }
+    // if(dir == -1 && zoom > 1){
+    //     zoom += -0.1;
+    // }
+    // if(dir == -1 && zoom >= 0 && zoom <= 1){
+    //     zoom += - 0.1;
+    // }
+    // if(dir == 1 && zoom >= 0 && zoom <= 1){
+    //     zoom += 0.1;
+    // }
+    // if(zoom <=0){
+    //     zoom = 0.1;
+    // }
 
     // if(dir >= 1){
     //     zoom += 1;
@@ -112,11 +129,28 @@ function keyPressed() {
     //     zoom = 1;
     // }
 
-    console.log(dir + ", " + zoom);
+    // console.log(dir + ", " + zoom);
     
     
     //zoom += dir * (1)**dir; //10 - это насколько быстро будет менятся зум
   }
+
+// function relativeVelocity(VelOfTargetPoint, referencePointVel){
+//     var resultX = (VelOfTargetPoint.x - referencePointVel.x) / (1 - (VelOfTargetPoint.x*referencePointVel.x) / (c**2));
+//     var resultY = (VelOfTargetPoint.y - referencePointVel.y) / (1 - (VelOfTargetPoint.y*referencePointVel.y) / (c**2));
+    
+//     // var resultX = -1 * (c**2)*(VelOfTargetPoint.x-referencePointVel.x)/(VelOfTargetPoint.x*referencePointVel.x - 9);
+//     // var resultY = -1 * (c**2)*(VelOfTargetPoint.y-referencePointVel.y)/(VelOfTargetPoint.y*referencePointVel.y - 9);
+
+//     // console.log(resultX + " и " +  resultY);
+//     // console.log((1 - (VelOfTargetPoint.mag()*referencePointVel.mag()) / (c**2)));
+
+//     return createVector(resultX, resultY);
+// }
+
+function clamp(x, min, max){
+    return Math.max(min, Math.min(x, max) );
+}
 
 function relativeVelocity(VelOfTargetPoint, referencePointVel){
     var resultX = (VelOfTargetPoint.x - referencePointVel.x) / (1 - (VelOfTargetPoint.x*referencePointVel.x) / (c**2));

@@ -1,4 +1,4 @@
-class RelatavisticBody {
+class RelatavisticBody { //переименовать в SpaceBody
     constructor(pos = createVector(0, 0), vel = createVector(0,0)){
         this.pos = pos;
         this.vel = vel;
@@ -12,7 +12,7 @@ class RelatavisticBody {
         this.scale = 60;
         this.rotation = 0; //in radians
         this.geometry = {
-            type: "circl",
+            type: "circle",
             shape: [[0,0],[1,0],[1,1],[0,1]],
         };
         bodies.push(this);
@@ -44,13 +44,10 @@ class RelatavisticBody {
             point(this.pos);
             pop();
         } else if (this.geometry.shape != null){
-            let offset = this.scale / 2
+            // let offset = this.scale / 2 * 0; //офсет не нужен, он сдвигает объекты в стороны, хотя они уже сдвинуты translate'ом miniscul
             push();
-            translate(this.pos.x - offset - camOffset.x, this.pos.y - offset - camOffset.y);
+            translate((this.pos.x - referenceObject.pos.x) * zoom + width/2, (this.pos.y - referenceObject.pos.y) * zoom + height/2);
             rotate(this.rotation);
-            // if(this.vel.mag() != 0){
-            //     scale(this.gamma.x, this.gamma.y);
-            // }
 
             scale(zoom, zoom); //приближение или отдаление
             beginShape();
@@ -66,4 +63,9 @@ class RelatavisticBody {
 }
 
 
+//translate(this.pos.x - offset - camOffset.x + (referenceObject.pos.x - this.pos.x)*(-1 + 1/zoom), this.pos.y - offset - camOffset.y + (referenceObject.pos.y - this.pos.y)*(-1 + 1/zoom))
+
 //vertex((vert[0] * this.scale) / this.gamma.x  - (referenceObject.pos.x - this.pos.x) * (1 - 1/this.gamma.x) - (referenceObject.pos.x - this.pos.x) * (1-zoom), (vert[1] * this.scale) / this.gamma.y  - (referenceObject.pos.y - this.pos.y) * (1 - 1/this.gamma.y) - (referenceObject.pos.y - this.pos.y) * (1 - zoom));
+
+
+//zoom: - dist /1 + dist/zoom = dist*(-1 + 1/zoom)
