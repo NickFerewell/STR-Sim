@@ -22,7 +22,14 @@ class SpaceBody {
 
     update() {
         this.pos.add(this.vel);
-        this.vel.add(this.acc);  //вектор скорости может быть больше скорости света из-за того, что его компоненты по отдельности могут приблизиться к скорости света
+        if(this.vel.copy().add(this.acc).mag() >= c){ //v + a > c    v + b <c  c - acc.mag()
+            while (this.vel.copy().add(this.acc).mag() >= c) {
+                this.acc.mult(0.99);
+            }
+        } else {
+            this.vel.add(this.acc);
+        }
+          //вектор скорости может быть больше скорости света из-за того, что его компоненты по отдельности могут приблизиться к скорости света
         this.acc.mult(0);
         // var relVel = relativeVelocity(this.vel, referenceObject.vel);
         // console.log(relVel.mag());
@@ -111,7 +118,7 @@ class SpaceBody {
     }
 
     applyForce(force) {
-        let f = p5.Vector.div(force, this.mass);
+        // let f = p5.Vector.div(force, this.mass);
         var accX = ((force.x - (this.vel.x**2 * force.x) / c**2)) / (this.mass * this.gamma.x);
         var accY = ((force.y - (this.vel.y**2 * force.y) / c**2)) / (this.mass * this.gamma.y);
         var acc = createVector(accX, accY);
@@ -125,7 +132,7 @@ class SpaceBody {
 
         let strength = constrain(G * (this.mass * body.mass) / distanceSq, 0, 2);
         
-        force.setMag(strength).mult(1);
+        force.setMag(strength);
 
         body.applyForce(force);
     }
