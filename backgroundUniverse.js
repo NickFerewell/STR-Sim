@@ -1,116 +1,70 @@
-// class BackgroundUniverse{
-// 	static unit = 10;
-// 	static nSectorsX = canvWidth / this.unit;
-// 	static nSectorsY = canvHeight / this.unit;
-// 	static draw(){
-// 		var screenSector = {x:0,y:0};
-// 		for(screenSector.x = 0; screenSector.x < this.nSectorsX; screenSector.x++){ //x
-// 			for (screenSector.y = 0; screenSector.y < nSectorsY; screenSector.y++) { //y
-// 				randomSeed(y);
-// 				rnd = random(20)
-// 				if(rnd <= 1){
-// 					stroke(255 / rnd);
-// 					point(screenSector.x * unit + unit/2, screenSector.y * unit + unit/2, rnd);
-// 				}
-// 			}
-// 		}
-// 	}
-// }
-
-// function drawBackgroundUniverse(){
-// 	var unit = 10;
-// 	var nSectorsX = canvWidth / this.unit;
-// 	var nSectorsY = canvHeight / this.unit;
-	
-// 	// var screenSector = {x:0,y:0};
-// 	var screenSectorX;
-
-// 	for(this.screenSectorX = 0; this.screenSectorX < this.nSectorsX; this.screenSectorX++){ //x
-// 		for (this.screenSector.y = 0; this.screenSector.y < this.nSectorsY; this.screenSector.y++) { //y
-// 			randomSeed(y);
-// 			var rnd = random(20)
-// 			if(this.rnd <= 1){
-// 				stroke(255 / this.rnd);
-// 				point(this.screenSector.x * this.unit + this.unit/2, this.screenSector.y * this.unit + this.unit/2, this.rnd);
-// 			}
-// 		}
-// 	}
-// }
 var backgroundUniverse = []; //массив слоёв паралакса заднего фона
-var starSize = 1.5; //1, 8
-var parallaxSpeed = 0.3;
-var backUniverseSize = 5;
+var layersNum = 4;
+var backUniverseSize = 5; //5, 1/minZoom?
+var starSize = 2; //1, 1.5, 8, 2
+var starCount = backUniverseSize * 16 * 2 * 1.5;//с двойкой лучше и красивее //количество звёзд на самом заднем уровне 20, 40. 400 для 5 размера вселенной. backUniverseSize * 80, backUniverseSize * 16
+var parallaxSpeed = 0.1; //0.9, 0.3
 var backUniverseSizeW;
 var backUniverseSizeH;
 
 function generateBackgroundUniverse(){
 	backUniverseSizeW = canvWidth * backUniverseSize; //width * 1/minZoom?
-	backUniverseSizeH = canvHeight * backUniverseSize;
+	backUniverseSizeH = canvHeight * backUniverseSize; //height * 1/minZoom
 
-	var layersNum = 4;
-	var starCount = 400; //количество звёзд на самом заднем уровне 20, 40
 	for (var i = 0; i < layersNum; i++) {
 		backgroundUniverse.push([]);
 		for (var j = 0; j < starCount; j++) {
-			var newStar = {x: random(- width * 1/minZoom, width * 1/minZoom), y: random(-height * 1/minZoom, height * 1/minZoom), brightness: (layersNum - i) * random(0.5, 1.5),}
+			var newStar = {
+				x: random(- backUniverseSizeW/2, backUniverseSizeW/2), 
+				y: random(-backUniverseSizeH/2, backUniverseSizeH/2), 
+				brightness: (layersNum - i) * random(0.5, 1.5),
+				parLayerShift: random(-0.3, 0.3)
+			}
 			backgroundUniverse[i].push(newStar);
 		}
 	}
 }
 
-function drawBackgroundUniverse(){ //ЛАГАЕТ!(((
-	// var noiseScale = 2; //0.02
-	// var unit = 100;
-	// var nSectorsX = canvWidth / unit;
-	// var nSectorsY = canvHeight / unit;
-	// console.log(nSectorsX, nSectorsY);
+function drawBackgroundUniverse(){ //ЛАГАЕТ!((( //Делать это всё через GPU, чтобы не лагало. Тут происходит слишком много событий в секунду.
 	
-	// // var screenSector = {x:0,y:0};
-	// for(x = 0; x < nSectorsX; x++){ //x
-	// 	for (y = 0; y < nSectorsY; y ++) { //y
-	// 		// console.log("Yeet!");
-	// 		// randomSeed(y);
-	// 		var value = noise((x + camOffset.x) * noiseScale,(y + camOffset.y) * noiseScale);
-	// 		console.log(value);
-	// 		if(value < 0.5){
-	// 			stroke(255 * value, 100, 100);
-	// 			circle((x+camOffset.x) * unit, (y+camOffset.y)*unit, value*10);
-	// 			console.log(x,y);
-	// 		}
-	// 	}
-	// }
 	push();
 	for (var i = 0; i < backgroundUniverse.length; i++) {
-		// var layerDifX = referenceObject.pos.x * parallaxSpeed/(i+1);
-		// layerDifX = layerDifX % width;
-		// console.log(layerDifX);
 
-		// var layerDifY = referenceObject.pos.Y * parallaxSpeed/i;
-		// layerDifY = layerDifY % width;
-
-		// translate(layerDifX, layerDifY);
-
-		backgroundUniverse[i].forEach( function(element, index) {
+		backgroundUniverse[i].forEach( function(element, index) { 
 			colorMode(HSB); //HSV, value, lightness
 			fill(100 * element.brightness,40,30 * element.brightness); //сделать звёзды чуть темнее
-			var parLayerSpeed = parallaxSpeed / (i + 1);
+			var parLayerSpeed = parallaxSpeed / (i + 1 + element.parLayerShift);
 
-			var x = ((parLayerSpeed * (element.x - referenceObject.pos.x)) % (backUniverseSizeW));// % width * 2.5 означает, что когда звёзды закончатся, то они начнут повторятся. Они создаются на промежутке -width/2.5, как сказано в generateBackgroundUnivesre
-			
+			var starSpeed = relativeVelocity(referenceObject.vel.copy().mult(parLayerSpeed), referenceObject.vel); //Можно преобразовать
+			var starGamma = {x: 1, y: 1};
+			// starGamma.x = 1 / Math.sqrt(1 - (starSpeed.x**2)/(c**2));
+			starGamma.x = Math.min(1 / Math.sqrt(1 - (starSpeed.x / c)**2), maxGamma);
+			starGamma.y = Math.min(1 / Math.sqrt(1 - (starSpeed.y / c)**2), maxGamma);
+
+
+			var x = ((-(referenceObject.pos.x))*parLayerSpeed + element.x - (Math.sign(referenceObject.pos.x))*(backUniverseSizeW/2))% (backUniverseSizeW) + (backUniverseSizeW/2) + (Math.sign(referenceObject.pos.x))*(backUniverseSizeW/2)
+			x -= (width/2 - x) * zoom;
+			if(x > width/2){
+				x = x / starGamma.x;
+			} else{
+				x = x * starGamma.x;
+			}
+			//скорость звезды относительно меня равна speed(Относительно корабля) = relVel(ship.vel, ship.vel * parLayerSpeed) делать это только для звёзд на экране, пожалуйста.
+			//Значит их гамма равна 1/Math.sqrt(1-(starSpeed**2)/(c**2)
+			//На далёких расстояниях от центра вселенной законы действуют по-другому.(>20000u)
 			// console.log(backUniverseSizeW)
-			var y = ((element.y * zoom) % (height*2.5) + height/2) - (referenceObject.pos.y * parLayerSpeed);
 
-			// var x = (element.x * zoom - referenceObject.pos.x) * 0.1;
-			// x = x % width;
-			// var y = (element.y * zoom - referenceObject.pos.y) * 0.1;
-			// y = y % height;
+			var y = ((-(referenceObject.pos.y))*parLayerSpeed + element.y - (Math.sign(referenceObject.pos.y))*(backUniverseSizeH/2))% (backUniverseSizeH) + (backUniverseSizeH/2) + (Math.sign(referenceObject.pos.y))*(backUniverseSizeH/2)
+			y -= (height/2 - y) * zoom;
+			if(y > height/2){
+				y = y / starGamma.y;
+			} else{
+				y = y * starGamma.y;
+			}
 
-			var size = element.brightness * starSize * zoom;
-			circle(x, y, size); //выглядит некрасиво, но работает эффективно //zoom не работает рдлытос!
+			var size = clamp(element.brightness * starSize * zoom, 0.32 * element.brightness * 2, 1000); //element.brightness * starSize * zoom    //var size = starSize * zoom * 1.5 * (6-i)
+			circle(x, y, size); //выглядит некрасиво, но работает эффективно //zoom не работает рдлытос! //Сделать объекты на небе настоящими объектами
 		});
 	}
 	pop()
 }
-
-// var x = ((element.x * zoom) % (width * 2.5) + width/2) - (referenceObject.pos.x * parallaxSpeed/(i+1));
-// var x = ((referenceObject.pos.x + element.x) * parLayerSpeed) % width * 2.5

@@ -1,20 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asteroids:Exploration</title> <!-- Time is Space -->
+  <head>
+    <title>Asteroids</title>
+    
     <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.min.js"></script>
-    <script src="main.js"></script>
-    <script src="relativisticBody.js"></script>
-    <script src="startWorld.js"></script>
-    <script src="updateWorld.js"></script>
-    <script src="asteroid.js"></script>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" type="image/x-icon" href="asteroid-2-128.png"> 
+     <!-- https://icons.iconarchive.com/icons/goodstuff-no-nonsense/free-space/1024/asteroid-2-icon.png -->
+  </head>
+  <body>
+  <script>
+    window.addEventListener('contextmenu', function(e){
+    e.preventDefault();
+}, false);
+  </script>
+    <!-- <script src="p5.js"></script> -->
+    <script language="javascript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/p5@1.1.4/lib/p5.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/p2.js/0.7.1/p2.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="startWorld.js"></script>
+    <script type="text/javascript" src="updateWorld.js"></script>
+    <script type="text/javascript" src="drawWorld.js"></script>
+    <script type="text/javascript" src="backgroundUniverse.js"></script>
+    <script type="text/javascript" src="spaceBody.js"></script>
+    <script type="text/javascript" src="ship.js"></script>
+    <script type="text/javascript" src="asteroid.js"></script>
+    <script type="text/javascript" src="attractor.js"></script>
+
+
+    <!-- <script src="sketch.js"></script>
     <script src="ship.js"></script>
-    <script src="backgroundUniverse.js"></script>
-    <script src="drawWorld.js"></script>
-</body>
+    <script src="asteroid.js"></script>
+    <script src="attractor.js"></script> -->
+    <!-- <script src="laser.js"></script> -->
+  </body>
 </html>

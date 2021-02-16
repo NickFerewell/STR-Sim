@@ -1,9 +1,12 @@
-class Asteroid extends RelatavisticBody{
-    constructor(pos, vel){
+class Asteroid extends SpaceBody{
+	constructor(pos = createVector(), mass = 10, vel = createVector()){
         super(pos, vel);
         this.geometry.type = "concave line";
         this.geometry.shape = [];
-        this.r = random(15, 50);
+        this.mass = mass;
+        this.density = 0.1;//3
+        this.r = sqrt(this.mass/(this.density*PI)); //random(15, 50);
+
         this.scale = 2;
 
         this.total = floor(random(5, 15));
@@ -18,5 +21,4 @@ class Asteroid extends RelatavisticBody{
             var y = r * sin(angle);
             this.geometry.shape.push([x,y]);
         }
-    }
-}
+    }}
