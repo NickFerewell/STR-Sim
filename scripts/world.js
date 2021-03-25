@@ -144,11 +144,11 @@ function drawWorld(){
 
     if(renderMode == 0){
         bodies.forEach( function(body) {
-            // body.regularDraw();
+            body.regularDraw();
         });
     } else if(renderMode == 1){
         bodies.forEach( function(body) {
-            // body.oldContractionDraw();
+            body.oldContractionDraw();
         });
     } else if(renderMode == 2){
         bodies.forEach( function(body) {

@@ -8,7 +8,7 @@ function myDist(from, to){
     return Math.sqrt((to.x - from.x)**2 + (to.y - from.y)**2);
 }
 function mySub(from, what){
-    return {x: what.x - from.x, y: what.y - from.y};
+    return {x: from.x - what.x, y: from.y - what.y};
 }
 function myAdd(term1, term2){
     return {x: term1.x + term2.x, y: term1.y + term2.y};

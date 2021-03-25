@@ -82,7 +82,7 @@ class ThirdShip extends AnimationBody{
 			// if(myMagnitude(this.body.velocity) > upperSpeedMinus){ //0.9964
 			// 	this.body.velocity = myChangeMag(this.body.velocity, upperSpeedMinus*0.9999 * (1-0.0001/upperSpeedMinus));
 			}
-			this.applyForce(myMult({x: -this.body.velocity.x, y: -this.body.velocity.y}, this.stoppingSpeed * staticPointGamma));
+			this.applyForce(myMult({x: -this.body.velocity.x, y: -this.body.velocity.y}, this.stoppingSpeed * Math.sqrt(staticPointGamma)));
 		}
 
 			//Length contraction alternative(реальное физическое сокращение расстояний):
@@ -101,7 +101,7 @@ class ThirdShip extends AnimationBody{
 			// scale(zoom);
 			drawArrowWithName(createVector(width/2, height/2), myMult(acc, 500000), "g: " + (myMagnitude(acc) / Planet.gOnEarth).toFixed(2), "red", zoom) //Рисовать стрелку со значением g
 
-			var vel = relativeVelocity(selectedBody.body.velocity, this.body.velocity);
+			var vel = relativeVelocity(this.body.velocity, selectedBody.body.velocity);
 			drawArrowWithName(createVector(width/2, height/2), myMult(vel, screenMaxFPS), "v: " + myMagnitude(vel).toFixed(2), "#39729d", zoom);
 
 			// console.log((myMagnitude(acc) / Planet.gOnEarth).toFixed(2))
@@ -120,6 +120,6 @@ class ThirdShip extends AnimationBody{
 
 	applyForce(force){ //Для самой системы отсчёта другие правила
 		var acc = myDiv(mySub(force, myMult(this.body.velocity, myScalarMult(this.body.velocity, force)/(c**2))), this.body.mass * this.Gamma);
-		Matter.Body.applyForce(this.body, this.body.position, myMult(acc, -this.body.mass));
+		Matter.Body.applyForce(this.body, this.body.position, myMult(acc, this.body.mass));
 	}
 }

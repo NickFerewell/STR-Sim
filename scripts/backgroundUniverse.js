@@ -110,6 +110,7 @@ function drawBackgroundUniverse(){ //ЛАГАЕТ!((( //Делать это вс
 				y += height/2;
 				*/
 
+				/*
 				var starSpeed = relativeVelocity(myMult(referencePoint.velocity, parLayerSpeed), referencePoint.velocity); //Можно преобразовать
 				var starGamma = 1 / Math.sqrt(1 - (myMagnitude(starSpeed)/c)**2);
 				var direction = myHeading(referencePoint.velocity);
@@ -147,6 +148,42 @@ function drawBackgroundUniverse(){ //ЛАГАЕТ!((( //Делать это вс
 					newY = backUniverseSizeH/2 - (newY % backUniverseSizeH);
 				}
 				newY *= zoom;
+				newY += height/2;
+				*/
+
+				var starSpeed = relativeVelocity(myMult(referencePoint.velocity, parLayerSpeed), referencePoint.velocity); //*staticPointGamma
+				var starGamma = 1 / Math.sqrt(1 - (myMagnitude(starSpeed)/c)**2);
+				var direction = myHeading(referencePoint.velocity);
+
+				var x = (-(referencePoint.position.x)*parLayerSpeed + element.x);
+				var y = (-(referencePoint.position.y)*parLayerSpeed + element.y);
+
+				newX = x;
+				newY = y;
+
+				if(Math.abs(newX) > backUniverseSizeW/2){
+					newX = Math.sign(newX) * (- backUniverseSizeW) + (newX % backUniverseSizeW);
+				}
+				if(Math.abs(newY) > backUniverseSizeH/2){
+					newY = Math.sign(newY) * (- backUniverseSizeH) + (newY % backUniverseSizeH);
+				}
+
+				newX -= Math.sign(newX)*backUniverseSizeW/2;
+				newY -= Math.sign(newY)*backUniverseSizeH/2;
+
+				// newX *= zoom /starGamma
+				// newY *= zoom /starGamma
+				newX *= zoom
+				newY *= zoom
+
+				//Length, distance contraction
+				var tempCoords = myRotateVec({x: newX, y: newY}, -direction);
+				tempCoords.x /= starGamma;
+				newCoords = myRotateVec(tempCoords, direction);
+				newX = newCoords.x;
+				newY = newCoords.y;
+
+				newX += width/2;
 				newY += height/2;
 				
 			}

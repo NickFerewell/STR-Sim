@@ -397,8 +397,11 @@ class SimpleBody{
 		// 	this.body.velocity = myChangeMag(this.body.velocity, upperSpeedMinus); //0.9999
 		// }
 
-		this.relVel = relativeVelocity(this.body.velocity, referenceBody.body.velocity);  //Сделать изменение гаммы плавным lerp()
-        this.gamma.x = 1/(Math.sqrt(1 - (this.relVel.x / c)**2));
+		this.relVel = relativeVelocity(this.body.velocity, referenceBody.body.velocity); //Скорость объекта относительно точки отсчёта. Инвертирована, формула неправильная
+		// console.log(this.relVel, this.Gamma, mySub(this.body.velocity, referenceBody.body.velocity), referenceBody.body.velocity)
+
+
+        this.gamma.x = 1/(Math.sqrt(1 - (this.relVel.x / c)**2)); //Сделать изменение гаммы плавным lerp()
         this.gamma.y = 1/(Math.sqrt(1 - (this.relVel.y / c)**2)); // /Math.SQRT2
 
         this.Gamma = 1/Math.sqrt(1 - (myMagnitude(this.relVel)/c)**2);
@@ -439,7 +442,7 @@ class SimpleBody{
 			bodyToPull = body;
 		}
 		var force = (G * (thisMass * bodyMass)) / (myDist(bodyPos, thisPos))**2;
-		var dir = myNormalize(mySub(bodyPos, thisPos));
+		var dir = myNormalize(mySub(thisPos, bodyPos));
 		// console.log(mult1(dir, force));
 		// Matter.Body.applyForce(bodyToPull, bodyPos, myMult(dir, force));
 		bodyToPull.parentObject.applyForce(myMult(dir, force));
