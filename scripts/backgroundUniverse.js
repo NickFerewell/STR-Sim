@@ -3,7 +3,7 @@ var layersNum = 4;
 var backUniverseSize = 5; //5, 1/minZoom?
 var starSize = 1; //1, 1.5, 8, 2
 var starCount = backUniverseSize * 16 * 2 * 1.5;//с двойкой лучше и красивее //количество звёзд на самом заднем уровне 20, 40. 400 для 5 размера вселенной. backUniverseSize * 80, backUniverseSize * 16
-var parallaxSpeed = 0.1; //0.9, 0.3
+var parallaxSpeed = 0.9; //0.9, 0.3, 0.1
 var backUniverseSizeW;
 var backUniverseSizeH;
 
