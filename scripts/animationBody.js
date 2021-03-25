@@ -49,11 +49,11 @@ class AnimationBody extends SimpleBody{
 		this.drawAnimationParts();
 	}
 	regularDraw(){
-		// super.regularDraw();
+		super.regularDraw();
 		this.drawAnimationParts();
 	}
 	oldContractionDraw(){
-		// super.oldContractionDraw();
+		super.oldContractionDraw();
 		this.drawAnimationParts();
 	}
 

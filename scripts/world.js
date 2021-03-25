@@ -13,6 +13,11 @@ var PlanetarySystems = [];
 function startWorld(){
     createCanvas(windowWidth, windowHeight);
     background(51);
+    if(SHOW_CURSOR === true){
+        cursor(ARROW);
+    } else {
+        noCursor();
+    }
 	// create an engine
 	engine = Engine.create();
 	world = engine.world;
@@ -124,8 +129,9 @@ function drawWorld(){
     if(!isPaused){
         prevCamOffset = camOffset;
     }
-    camOffset = {x: lerp(prevCamOffset.x, referenceBody.body.position.x - width/2, camSpeed), y: lerp(prevCamOffset.y, referenceBody.body.position.y - height/2, camSpeed)};
-    
+    // camOffset = {x: lerp(prevCamOffset.x, referenceBody.body.position.x - width/2, camSpeed), y: lerp(prevCamOffset.y, referenceBody.body.position.y - height/2, camSpeed)};
+    camOffset = {x: referenceBody.body.position.x - width/2, y: referenceBody.body.position.y - height/2};
+
 
     if(keyboard.Plus){
     	changeZoom(1, 0.5);
@@ -138,11 +144,11 @@ function drawWorld(){
 
     if(renderMode == 0){
         bodies.forEach( function(body) {
-            body.regularDraw();
+            // body.regularDraw();
         });
     } else if(renderMode == 1){
         bodies.forEach( function(body) {
-            body.oldContractionDraw();
+            // body.oldContractionDraw();
         });
     } else if(renderMode == 2){
         bodies.forEach( function(body) {
@@ -162,6 +168,7 @@ function drawWorld(){
         textSize(20);
         text("drawMode" + renderMode, width, 25);
         text("zoom: " + zoom.toFixed(2), width, 42);
+        text("c: " + c, width, 59);
 
         textAlign(LEFT, BOTTOM);
         text("turn off/on debug mode - F3", 2, height); //switch off debug mode

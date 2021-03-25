@@ -63,9 +63,7 @@ class SimpleBody{
 
         // console.log(deltaD)
 
-
-
-        	//Length contrastion:
+  		//Length contraсtion:
         rotate(myHeading(this.relVel)); //referenceBody.body.velocity
         scale(1/this.Gamma, 1);
         rotate(-myHeading(this.relVel)); //referenceBody.interpolatedVelocity
@@ -78,6 +76,9 @@ class SimpleBody{
          	//приближение или отдаление
         translate(- (referenceBody.body.position.x - this.body.position.x) * (zoom-1), - (referenceBody.body.position.y - this.body.position.y) * (zoom-1))
   		scale(zoom, zoom);
+
+
+
 
 
 		// translate(width, height);
@@ -415,7 +416,7 @@ class SimpleBody{
         // this.body.position.x += this.body.velocity.x * (this.Gamma - 1);
         // this.body.position.y += this.body.velocity.y * (this.Gamma - 1);
         // this.body.timeScale *= this.Gamma;
-        Matter.Body.setPosition(this.body, myAdd(this.body.position, myMult(this.relVel, (this.Gamma - 1))));
+        // Matter.Body.setPosition(this.body, myAdd(this.body.position, myMult(this.relVel, (this.Gamma - 1)))); //Когда включено нивилирует сокращение расстояний(почему?)
 	}
 
 	attract(body){
@@ -511,8 +512,8 @@ class SimpleBody{
   //       var accY = ((force.y - (this.body.velocity.y**2 * force.y) / c**2)) / (this.body.mass * this.gamma.y);
   //       var acc = createVector(accX, accY);
 
-		// var acc = myDiv(mySub(force, myMult(this.relVel, myScalarMult(this.relVel, force)/(c**2))), this.body.mass * this.Gamma);
-		var acc = myDiv(force, this.body.mass * this.Gamma**3)
+		var acc = myDiv(mySub(force, myMult(this.relVel, myScalarMult(this.relVel, force)/(c**2))), this.body.mass * this.Gamma);
+		// var acc = myDiv(force, this.body.mass * this.Gamma**3)
 		// var acc = myDiv(force, this.body.mass * staticGamma**3)
 		Matter.Body.applyForce(this.body, this.body.position, myMult(acc, this.body.mass));
 	}

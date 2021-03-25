@@ -13,7 +13,7 @@ var gameCanvas;
 
 var referenceBody;
 var G = 0.05; //0.05, 1
-var c = 60; //12, 30, 2, 4, 120
+var c = 12; //12, 30, 2, 4, 120, 60, 9
 
 var maxGamma = 280; //10, 280, 2
 var renderMode = 2;
