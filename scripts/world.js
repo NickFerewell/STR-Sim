@@ -173,6 +173,7 @@ function drawWorld(){
         text("drawMode" + renderMode, width, 25);
         text("zoom: " + zoom.toFixed(2), width, 42);
         text("c: " + c, width, 59);
+        text("Version " + document.gameVersion, width, 75);
 
         textAlign(LEFT, BOTTOM);
         text("turn off/on debug mode - F3", 2, height); //switch off debug mode

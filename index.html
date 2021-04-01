@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Asteroids</title>
+    <title>Relativity Simulation Game(?)</title>
     
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8">
+    <meta name="gameVersion" content="0.1.0"> <!-- major, minor, bugfix(revision) -->
     <!-- <link rel="shortcut icon" type="image/x-icon" href="asteroid-2-128.png">  -->
     <link rel="shortcut icon" type="image/svg" href="Asteroid-2.svg">
      <!-- https://icons.iconarchive.com/icons/goodstuff-no-nonsense/free-space/1024/asteroid-2-icon.png -->
@@ -42,22 +43,24 @@
     <script type="text/javascript" src="scripts\thirdShip.js"></script>
 
     <script>
-    window.addEventListener('contextmenu', function(e){
-      e.preventDefault();
-    }, false);
+      document.gameVersion = document.querySelector('meta[name="gameVersion"]').content;
 
-    //Скриншот на F1
-    function saveScreenshot(){
-      console.log("processing screenshot");
-      var dataURL = gameCanvas.toDataURL("image/png"); //image/jpeg
-      var link = document.createElement("a");
-      document.body.appendChild(link); // Firefox requires the link to be in the body :(
-      link.href = dataURL;
-      link.download = "screenshot.png"; //.jpg
-      link.click();
-      document.body.removeChild(link);
-    }
+      window.addEventListener('contextmenu', function(e){
+        e.preventDefault();
+      }, false);
 
-  </script>
+      //Скриншот на F1
+      function saveScreenshot(){
+        console.log("processing screenshot");
+        var dataURL = gameCanvas.toDataURL("image/png"); //image/jpeg
+        var link = document.createElement("a");
+        document.body.appendChild(link); // Firefox requires the link to be in the body :(
+        link.href = dataURL;
+        link.download = "screenshot.png"; //.jpg
+        link.click();
+        document.body.removeChild(link);
+      }
+
+    </script>
   </body>
 </html>

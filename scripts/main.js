@@ -1,3 +1,5 @@
+// const gameVersion = document.querySelector('meta[name="gameVersion"]').content;
+
 // module aliases
 var Engine = Matter.Engine,
     Render = Matter.Render,
