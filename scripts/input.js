@@ -7,9 +7,9 @@ var camSpeed = 1; //0.75, 0.65
 
 var mouseWorldPosition = {x: 0, y: 0};
 
-var keyboard = { //Сделать словарём булов для оптимизации(?). Сделать это словарём кейкодов, и сделать функцию для получения булевого значения, для этого нужен ещё один словарь с соотнесением кодов и клавиш. Ну или можно оставить и так. И так хорошо.
-    rightArrPressed: false, //Сделать систему инпутов как в Unity
-    leftArrPressed: false,  //Переделать и организовать через event.key
+var keyboard = { 
+    rightArrPressed: false,
+    leftArrPressed: false,
     upArrPressed: false,
     downArrPressed: false,
     spacePressed: false,
@@ -31,7 +31,6 @@ var keyboard = { //Сделать словарём булов для оптим�
 var SHOW_CURSOR;
 var DEBUG_MODE;
 var IS_PAUSED = false;
-// var FPS = 60;
 var zoom = 1; //0.5, 1, 0.425
 var screenMaxFPS = 60;
 var currentFPS;
@@ -52,6 +51,7 @@ var maxZoom = 5; // maxZoom = 1/minZoom
 //     if(prevKeyboard[key] == false && keyboard[key] == true){
 //         return true;
 //     } else false
+//     //return !prevKeyboard[key] * keyboard[key]
 // }
 
 function keyReleased() {
@@ -61,7 +61,6 @@ function keyReleased() {
         keyboard.rightArrPressed = false;
     } else if (keyCode == LEFT_ARROW) {
         keyboard.leftArrPressed = false;
-        // console.log("LEFT_RELEASED")
     }else if (keyCode == UP_ARROW) {
         keyboard.upArrPressed = false;
     } else if (keyCode == DOWN_ARROW) {
@@ -103,10 +102,8 @@ function keyPressed() {
         keyboard.spacePressed = true;
     } else if (keyCode == RIGHT_ARROW) {
         keyboard.rightArrPressed = true;
-        // console.log("RIGHT_PRESSED")
     } else if (keyCode == LEFT_ARROW) {
         keyboard.leftArrPressed = true;
-        // console.log("TURNINGLEFT")
     } else if (keyCode == UP_ARROW) {
         keyboard.upArrPressed = true;
     } else if (keyCode == DOWN_ARROW) {
@@ -126,7 +123,6 @@ function keyPressed() {
     } else if (keyCode == 189 || keyCode == 109) { //- || numpad-
         keyboard.Minus = true;
     } else if (keyCode == 114){ //turn bounding 'F3'
-    // console.log(+!DEBUG_MODE)
     cursor(ARROW);
         turnDebugMode(+!DEBUG_MODE);
     } else if (keyCode == 9){ //TAB
@@ -149,11 +145,6 @@ function keyPressed() {
         Matter.Body.setAngle(referenceBody.body, referenceBody.body.angle + Math.PI);
     }
 
-    // if(SHOW_CURSOR === true){
-    //     cursor(ARROW);
-    // } else {
-    //     noCursor();
-    // }
     if(keyCode != 116 && keyCode != 123){ //116-f5, 123-f12, 
         return false;
     }
@@ -173,8 +164,4 @@ function changeZoom(dir, mult = 1){
 
 function mousePressed(){
     mouseWorldPosition = {x: (mouseX - width/2)/zoom + referenceBody.body.position.x, y: (mouseY - height/2)/zoom + referenceBody.body.position.y};
-    // var Pairs = [];
-    // for(var k = 0, length3 = bodies.length; k < length3; k++){
-    //     Pairs.push(Matter.Pair.create(bodies[k], )
-    // }
 }

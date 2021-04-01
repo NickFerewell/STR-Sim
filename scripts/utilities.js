@@ -1,10 +1,6 @@
 //tools, utilities
 
 function myDist(from, to){
-    // var x = to.x - from.x;
-    // var y = to.y - from.y;
-    // var dist = Math.sqrt(x**2 + y**2);
-    // return dist;
     return Math.sqrt((to.x - from.x)**2 + (to.y - from.y)**2);
 }
 function mySub(from, what){
@@ -173,7 +169,7 @@ function myClone(obj, deep) {
     return myExtend({}, deep, obj);
 };
 
-function myMatrixMultByVec(matrix, vec){ // console.log(myMatrixMultByVec([[1,2],[3,4]], [5, 7])) [19, 43] - работает
+function myMatrixMultByVec(matrix, vec){
     // matrix = 
     // [[a, b],
     //  [c, d]];
@@ -194,7 +190,7 @@ function myMatrixDet(matrix){
 }
 
 function myMatrixTranspon(matrix){
-    return [[matrix[0][0], matrix[1][0]], [matrix[0][1], matrix[1][1]]];    // returen
+    return [[matrix[0][0], matrix[1][0]], [matrix[0][1], matrix[1][1]]];
 }
 
 function myReverseMatrix(matrix){
@@ -234,7 +230,6 @@ function truncateDecimals(number, digits) {
 };
 
 function vectorLerp(vec1, vec2, i){
-	// console.log(vec1, vec2)
 	return mySub(myMult(vec1, 1-i),myMult(vec2, i));
 }
 

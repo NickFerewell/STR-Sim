@@ -3,7 +3,7 @@ class Box extends SimpleBody{
 		super();
 		
 		this.body = Bodies.rectangle(x, y, w, h, this.options);
-		// this.body.velocity = {x: vx , y: vy};
+		Matter.Body.setVelocity(this.body, {x: vx , y: vy});
 		this.w = w;
 		this.h = h;
 		World.add(world, this.body);

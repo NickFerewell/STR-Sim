@@ -5,19 +5,14 @@ var selectedBody;
 
 var upperSpeedPrecision = 0.99999; //9
 var upperSpeed; //0.9964
-var upperSpeedMinus;
-// var upperSpeedMinus = truncateDecimals((upperSpeed - (10**(-numAllDigits(upperSpeed) - 1))), numAllDigits(upperSpeed) - 1 + upperSpeedPrecision);
+var upperSpeedMinus = upperSpeed - 10**(-numAllDigits(upperSpeed));
 
 var PlanetarySystems = [];
 
 function startWorld(){
     createCanvas(windowWidth, windowHeight);
     background(51);
-    // if(SHOW_CURSOR === true){
-    //     cursor(ARROW);
-    // } else {
-    //     noCursor();
-    // }
+
 	// create an engine
 	engine = Engine.create();
 	world = engine.world;
@@ -25,14 +20,6 @@ function startWorld(){
     selectedBody = new Empty();
     setC(c);
 	referenceBody = new ThirdShip(280, -150);
-
-    // new NewShip(0,0)
-    // console.log(upperSpeed)    
-    // console.log(upperSpeedMinus)
-    // console.log(numDigits(upperSpeed))
-    // console.log((10**(-numDigits(upperSpeed) - 1)).toFixed(numDigits(upperSpeed) + 1));
-    // console.log((c * upperSpeed - upperSpeedMinus).toFixed(numDigits(upperSpeed) + 1))
-
 
 	//loadMap:
     
@@ -56,9 +43,6 @@ function startWorld(){
     // PlanetarySystems.push(new PlanetarySystem(star, [planet1, planet2, Earth]));
 	// bodies.push(new Ground(width/2, height - 10, width, 20));
 
-	// // run the engine
-	// Engine.run(engine);
-
 	generateBackgroundUniverse();
 
     prevCamOffset = {x: referenceBody.body.position.x - width/2, y: referenceBody.body.position.y - height/2};
@@ -67,12 +51,10 @@ function startWorld(){
 
 function updateWorld(){
 
-    // staticPointGamma = 1/(Math.sqrt(Math.max(1-Math.pow(myMagnitude(referenceBody.body.velocity/c),2), 0)));
     staticPointGamma = Math.min(1/(Math.sqrt(Math.max(1-(myMagnitude(referenceBody.body.velocity)/c)**2), 0)), maxGamma);
 
 
 	if(keyboard.O){
-		// new StellarBody(mouseX + camOffset.x/zoom, mouseY + camOffset.y/zoom, random(10, 40)* 6);
         new StellarBody((mouseX - width/2)/zoom + referenceBody.body.position.x, (mouseY - height/2)/zoom + referenceBody.body.position.y, random(10, 40)* 6);
 	}
 
@@ -83,13 +65,6 @@ function updateWorld(){
     	bodies.forEach(function(body){
             body.update();
         });
-
-        // stellarBodies.forEach( function(stellarBody) {
-        //     bodies.forEach( function(body) {
-        //         if(stellarBody != body)
-        //         stellarBody.attract(body.body);
-        //     });
-        // });
 
         stellarBodies.forEach( function(stellarBody) {
             bodies.forEach( function(body) {
@@ -112,28 +87,13 @@ function updateWorld(){
 
     } else {}
 
-
-    // bodies.forEach( function(body1) {
-    //     bodies.forEach( function(body2) {
-    //         if(body1 != body2)
-    //        body1.attract(body2.body);
-    //     });
-    // });
-
-
 }
 
 function drawWorld(){
     background(51);
-    // if(SHOW_CURSOR == true){
-    //     cursor(ARROW);
-    // } else {
-    //     noCursor();
-    // }
     if(!isPaused){
         prevCamOffset = camOffset;
     }
-    // camOffset = {x: lerp(prevCamOffset.x, referenceBody.body.position.x - width/2, camSpeed), y: lerp(prevCamOffset.y, referenceBody.body.position.y - height/2, camSpeed)};
     camOffset = {x: referenceBody.body.position.x - width/2, y: referenceBody.body.position.y - height/2};
 
 
@@ -176,7 +136,7 @@ function drawWorld(){
         text("Version " + document.gameVersion, width, 75);
 
         textAlign(LEFT, BOTTOM);
-        text("turn off/on debug mode - F3", 2, height); //switch off debug mode
+        text("turn off/on debug mode - F3", 2, height);
         text("make screenshot - F1", 2, height - 20);
         pop();
     }
@@ -195,11 +155,7 @@ function setC(newC){
     console.log(upperSpeedMinus);
     for(var k = 0; k < bodies.length; k++){
         body = bodies[k];
-        // if(myMagnitude(body.body.velocity) >= upperSpeed){ //0.9964
-        //  body.body.velocity = myChangeMag(body.body.velocity, upperSpeedMinus); //0.9999, 0.99639
-        // }
         console.log(myMagnitude(body.body.velocity)*newC/oldC)
-        // body.body.velocity = myChangeMag(body.body.velocity, myMagnitude(body.body.velocity)*newC/oldC);
         Matter.Body.setVelocity(body.body, myMult(body.body.velocity, newC/oldC));
     }
 }
