@@ -90,7 +90,7 @@ class ThirdShip extends AnimationBody{
 		// console.log(staticPointGamma)
 		// this.body.velocity = myMult(this.body.velocity, staticPointGamma); //так делать нельзя, нужно умножать скорость и вручную прибавлять к позиции, изменять скорость нельзя
 		// this.body.position = myAdd(this.body.position, myMult(this.body.velocity, staticPointGamma - 1));
-		Matter.Body.setPosition(this.body, myAdd(this.body.position, myMult(this.body.velocity, (staticPointGamma - 1))));
+		// Matter.Body.setPosition(this.body, myAdd(this.body.position, myMult(this.body.velocity, (staticPointGamma - 1))));
 
 	}
 

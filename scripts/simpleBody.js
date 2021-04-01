@@ -13,6 +13,7 @@ class SimpleBody{
 		// this.gammaX = 1;
 		// this.gammaY = 1;
 		this.relVel = {x: 0, y: 0};
+		this.previousVelocity = {x:0, y: 0};
 	}
 
 	draw(){
@@ -42,7 +43,7 @@ class SimpleBody{
         // drawArrow(createVector(), distanceDelta);
         // console.log(distanceDelta)
         // translate(distanceDelta.x, distanceDelta.y);
-
+        
         var newB1 = myNormalize(referenceBody.body.velocity);
         var newB2 = {x: -newB1.y, y: newB1.x};
 
@@ -59,9 +60,15 @@ class SimpleBody{
 
         var oldDeltaD = myMatrixMultByVec(revBMatrix, [deltaD.x, deltaD.y]);
 
-        translate(-oldDeltaD[0], -oldDeltaD[1]);
-
+        translate(-oldDeltaD[0] * zoom, -oldDeltaD[1] * zoom);
+		
         // console.log(deltaD)
+
+
+         	//приближение или отдаление
+        translate(- (referenceBody.body.position.x - this.body.position.x) * (zoom-1), - (referenceBody.body.position.y - this.body.position.y) * (zoom-1))
+  		scale(zoom, zoom);
+
 
   		//Length contraсtion:
         rotate(myHeading(this.relVel)); //referenceBody.body.velocity
@@ -72,11 +79,6 @@ class SimpleBody{
 
         // scale(Math.abs(myNormalize(this.body.velocity).x) / this.gamma.x, Math.abs(myNormalize(this.body.velocity).y) / this.gamma.y);
         // console.log(this.gamma, this.Gamma, myMagnitude(this.gamma));
-
-         	//приближение или отдаление
-        translate(- (referenceBody.body.position.x - this.body.position.x) * (zoom-1), - (referenceBody.body.position.y - this.body.position.y) * (zoom-1))
-  		scale(zoom, zoom);
-
 
 
 
@@ -380,6 +382,7 @@ class SimpleBody{
 	}
 
 	update(){ //считать скорость самому, чтобы не было резких изменений скорости при взаимодействиях объектов. dX/dT - изменение не обязательно за один кадр. Лагает только ускоренный двигатель
+		this.previousVelocity = mySub(this.body.position, this.body.positionPrev);
 		// if(myMagnitude(this.body.velocity) >= c){
 		// 	myMult(this.body.velocity, 0.01);
 		// }
@@ -390,21 +393,40 @@ class SimpleBody{
 		// if(Math.abs(this.body.velocity.y) >= c){
 		// 	Matter.Body.setVelocity(this.body, {x: this.body.velocity.x, y: Math.sign(this.body.velocity.y) * (c - 0.01)});
 		// }
+		if(myMagnitude(this.body.velocity) > upperSpeed){ //0.9964
+				// this.body.velocity = myChangeMag(this.body.velocity, upperSpeedMinus*0.9999); //0.9999, 0.99639
+				console.log("upperSpeed");
+				Matter.Body.setVelocity(this.body, myChangeMag(this.body.velocity, upperSpeedMinus*0.9999))
+				
+		} else if (this.body.velocity == NaN) { //Возможно происходит из-за неточности вычислений с большой десятичной частью, как у скоростей очень близких к скорости смеха. Попробовать использовать decimal.js или math.js для точных вычислений и операций с матрицами и векторами
+			console.log("NaN");
+			Matter.Body.setVelocity(this.body, myChangeMag(this.previousVelocity, upperSpeedMinus*0.9999))
+		}
 
 		// if(myMagnitude(this.body.velocity) >= upperSpeed){ //0.999991, 0.9988
 		// 	// myMult(this.body.velocity, 0.3);
 		// 	// Matter.Body.setVelocity(this.body, myChangeMag(this.body.velocity, c * 0.9999));
 		// 	this.body.velocity = myChangeMag(this.body.velocity, upperSpeedMinus); //0.9999
 		// }
+		// this.GammaO = Math.min(1/(Math.sqrt(Math.max(1-myMagnitude(this.body.velocity)**2/c**2), 0)), maxGamma);
+		this.GammaO = 1/(Math.sqrt(1-myMagnitude(this.body.velocity)**2/c**2));
 
-		this.relVel = relativeVelocity(this.body.velocity, referenceBody.body.velocity); //Скорость объекта относительно точки отсчёта. Инвертирована, формула неправильная
+		if(myMagnitude(this.relVel) >= c){
+			console.log(true, this.GammaO);
+		}
+		this.relVel = relativeVelocity2(this.body.velocity, referenceBody.body.velocity, this.GammaO); //Скорость объекта относительно точки отсчёта. Инвертирована, формула неправильная
 		// console.log(this.relVel, this.Gamma, mySub(this.body.velocity, referenceBody.body.velocity), referenceBody.body.velocity)
-
+		// this.relSpeed = relativeSpeed(this.body.velocity, referenceBody.body.velocity)
+		// console.log(myMagnitude(this.relVel));
+		// console.log(myAdd(mySub(VelOfTargetPoint, referencePointVel), (gammaOfTarget - 1)*myDiv(referencePointVel, myMagnitude(referencePointVel)**2)*(myScalarMult(referencePointVel, VelOfTargetPoint) - myMagnitude(referencePointVel)**2)))
+		// console.log(this.GammaO)
 
         this.gamma.x = 1/(Math.sqrt(1 - (this.relVel.x / c)**2)); //Сделать изменение гаммы плавным lerp()
         this.gamma.y = 1/(Math.sqrt(1 - (this.relVel.y / c)**2)); // /Math.SQRT2
 
-        this.Gamma = 1/Math.sqrt(1 - (myMagnitude(this.relVel)/c)**2);
+        this.Gamma = 1/Math.sqrt(1 - myMagnitude(this.relVel)**2/c**2);
+        // console.log(myMagnitude(this.relVel)**2/c**2)
+        // console.log(this.relVel);
 
         // console.log(myMagnitude(this.gamma))
 
@@ -420,6 +442,8 @@ class SimpleBody{
         // this.body.position.y += this.body.velocity.y * (this.Gamma - 1);
         // this.body.timeScale *= this.Gamma;
         // Matter.Body.setPosition(this.body, myAdd(this.body.position, myMult(this.relVel, (this.Gamma - 1)))); //Когда включено нивилирует сокращение расстояний(почему?)
+		Matter.Body.setPosition(this.body, myAdd(this.body.position, myMult(this.body.velocity, (staticPointGamma - 1))));
+
 	}
 
 	attract(body){

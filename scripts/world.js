@@ -13,11 +13,11 @@ var PlanetarySystems = [];
 function startWorld(){
     createCanvas(windowWidth, windowHeight);
     background(51);
-    if(SHOW_CURSOR === true){
-        cursor(ARROW);
-    } else {
-        noCursor();
-    }
+    // if(SHOW_CURSOR === true){
+    //     cursor(ARROW);
+    // } else {
+    //     noCursor();
+    // }
 	// create an engine
 	engine = Engine.create();
 	world = engine.world;
@@ -125,7 +125,11 @@ function updateWorld(){
 
 function drawWorld(){
     background(51);
-
+    // if(SHOW_CURSOR == true){
+    //     cursor(ARROW);
+    // } else {
+    //     noCursor();
+    // }
     if(!isPaused){
         prevCamOffset = camOffset;
     }

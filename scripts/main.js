@@ -27,6 +27,19 @@ function setup(){
 
     lastLoop = new Date();
 
+    // console.log(DEBUG_MODE, localStorage.getItem("DEBUG_MODE"), !DEBUG_MODE);
+    // DEBUG_MODE =  localStorage.getItem("DEBUG_MODE");
+    // console.log(localStorage.getItem("DEBUG_MODE"))
+    // turnDebugMode(false)
+    // console.log(localStorage.getItem("DEBUG_MODE"), !localStorage.getItem("DEBUG_MODE"), !!localStorage.getItem("DEBUG_MODE"));
+    // console.log(+(localStorage.getItem("DEBUG_MODE")), !(+localStorage.getItem("DEBUG_MODE")), !!(+localStorage.getItem("DEBUG_MODE")));
+    // turnDebugMode(!!(+localStorage.getItem("DEBUG_MODE")));
+    turnDebugMode(+localStorage.getItem("DEBUG_MODE"))
+    // console.log(localStorage.getItem("DEBUG_MODE"), false)
+    // DEBUG_MODE = false;
+    // console.log(DEBUG_MODE, localStorage.getItem("DEBUG_MODE"))
+
+
     startWorld();
 }
 
@@ -78,5 +91,73 @@ function relativeVelocity(VelOfTargetPoint, referencePointVel){
     // return {x: resultX, y: resultY};
 
     return myDiv(mySub(VelOfTargetPoint, referencePointVel), (1 - (myMagnitude(VelOfTargetPoint)*myMagnitude(referencePointVel))/(c**2)))
+}
+
+function relativeVelocity2(VelOfTargetPoint, referencePointVel, gammaOfTarget){ //Скорость объекта, который мы измеряем, относительно центра координат и скорость наблюдателя относительно центра координат. И лоренц-фактор объекта относительно центра координат
+    // return myMult(myAdd(mySub(referencePointVel, VelOfTargetPoint), myMult(myMult(VelOfTargetPoint, gammaOfTarget - 1), myScalarMult(VelOfTargetPoint, referencePointVel)/(myMagnitude(VelOfTargetPoint)**2)-1)), 1/(gammaOfTarget*(1-myScalarMult(VelOfTargetPoint, referencePointVel)/(c**2))));
+    // return myDiv(myAdd(mySub(VelOfTargetPoint, referencePointVel), (gammaOfTarget - 1)*myDiv(referencePointVel, myMagnitude(referencePointVel)**2)*(myScalarMult(referencePointVel, VelOfTargetPoint) - myMagnitude(referencePointVel)**2)), gammaOfTarget*(1-myScalarMult(referencePointVel, VelOfTargetPoint)/c**2));
+    return myDiv(myAdd(mySub(VelOfTargetPoint, referencePointVel), myMult(myDiv(referencePointVel, myMagnitude(referencePointVel)**2), (gammaOfTarget - 1) * (myScalarMult(referencePointVel, VelOfTargetPoint) - myMagnitude(referencePointVel)**2))), gammaOfTarget*(1-myScalarMult(referencePointVel, VelOfTargetPoint)/c**2));
+
+}
+
+function relativeSpeed(VelOfTargetPoint, referencePointVel){
+    // return Math.sqrt(1-(c**2- myMagnitude(VelOfTargetPoint)**2)*(c**2- myMagnitude(referencePointVel)**2)/((c**2- myScalarMult(VelOfTargetPoint, referencePointVel))**2))*c
+    return Math.sqrt((mySqrOfVec3(mySub(VelOfTargetPoint, referencePointVel)) - 1/(c**2) * myCrossProduct(VelOfTargetPoint, referencePointVel)**2), (1 - myScalarMult(referencePointVel, VelOfTargetPoint)/(c**2)))
+}
+
+function turnDebugMode(value){
+    // console.log(value);
+    // if(value){
+    //     DEBUG_MODE = value;
+    //     SHOW_CURSOR = value;
+    //     localStorage.setItem("DEBUG_MODE", value);
+    // } else {
+    //     DEBUG_MODE = localStorage.getItem("DEBUG_MODE");
+    //     SHOW_CURSOR = localStorage.getItem("DEBUG_MODE");
+    // }
+    // DEBUG_MODE = value;
+    // SHOW_CURSOR = value;
+    // localStorage.setItem("DEBUG_MODE", value);
+    // if(value == true){
+    //     DEBUG_MODE = value;
+    //     SHOW_CURSOR = value;
+    //     localStorage.setItem("DEBUG_MODE", value);
+    // } else if(value == false){
+    //     DEBUG_MODE = value;
+    //     SHOW_CURSOR = value;
+    //     localStorage.setItem("DEBUG_MODE", value);
+    // } else {
+    //     var setting = localStorage.getItem("DEBUG_MODE");
+    //     if(setting != null || setting != undefined){
+    //         DEBUG_MODE = setting;
+    //     } else{
+    //         DEBUG_MODE = false;
+    //         localStorage.setItem("DEBUG_MODE", false);
+    //     }
+    // }
+    DEBUG_MODE = value;
+    turnCursor(value);
+    localStorage.setItem("DEBUG_MODE", value);
+}
+
+function turnCursor(value){
+    // console.log("CURSOR: " + value)
+    // cursor(ARROW);
+    // SHOW_CURSOR = value;
+    // if(value == true){
+    //     // console.log(SHOW_CURSOR, value);
+    //     cursor(ARROW);
+    //     console.log(ARROW)
+    // } else if(value == 0){
+    //     // console.log(SHOW_CURSOR, value)
+    //     // console.log("hsg")
+    //     noCursor();
+    // }
+    SHOW_CURSOR = value;
+    if(SHOW_CURSOR == true){
+        cursor(ARROW);
+    } else {
+        noCursor();
+    }
 }
 

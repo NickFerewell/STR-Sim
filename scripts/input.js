@@ -28,8 +28,8 @@ var keyboard = { //Сделать словарём булов для оптим�
     c: false
 };
 
-var SHOW_CURSOR = false;
-var DEBUG_MODE = false;
+var SHOW_CURSOR;
+var DEBUG_MODE;
 var IS_PAUSED = false;
 // var FPS = 60;
 var zoom = 1; //0.5, 1, 0.425
@@ -126,8 +126,9 @@ function keyPressed() {
     } else if (keyCode == 189 || keyCode == 109) { //- || numpad-
         keyboard.Minus = true;
     } else if (keyCode == 114){ //turn bounding 'F3'
-        SHOW_CURSOR = !SHOW_CURSOR;
-        DEBUG_MODE = !DEBUG_MODE;
+    // console.log(+!DEBUG_MODE)
+    cursor(ARROW);
+        turnDebugMode(+!DEBUG_MODE);
     } else if (keyCode == 9){ //TAB
         keyboard.TAB = true;
     } else if(keyCode == 79){ //O - new StellarObject
@@ -148,11 +149,11 @@ function keyPressed() {
         Matter.Body.setAngle(referenceBody.body, referenceBody.body.angle + Math.PI);
     }
 
-    if(SHOW_CURSOR === true){
-        cursor(ARROW);
-    } else {
-        noCursor();
-    }
+    // if(SHOW_CURSOR === true){
+    //     cursor(ARROW);
+    // } else {
+    //     noCursor();
+    // }
     if(keyCode != 116 && keyCode != 123){ //116-f5, 123-f12, 
         return false;
     }

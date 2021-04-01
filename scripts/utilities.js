@@ -20,7 +20,9 @@ function myMagnitude(vec){
     return Math.sqrt(vec.x**2 + vec.y**2);
 }
 function myDiv(vec, times){
-    return {x: vec.x / times, y: vec.y / times};
+    if(times != 0){
+        return {x: vec.x / times, y: vec.y / times};
+    } else return {x: 0, y: 0}
 }
 function myDiv2(vec, times){
     return myChangeMag(vec, myMagnitude(vec)/times);
@@ -43,7 +45,7 @@ function myHeading(vec){
     return Math.atan2(vec.y, vec.x);
 }
 
-function myScalarMult(vec1, vec2){
+function myScalarMult(vec1, vec2){ //dot product
     return vec1.x * vec2.x + vec1.y * vec2.y;
 }
 
@@ -63,6 +65,12 @@ function mySqrOfVec2(vec){
     return myChangeMag(vec, myMagnitude(vec)**2);
 }
 
+function mySqrOfVec3(vec){
+    // return myScalarMult(vec, vec);
+    // return myMagnitude(vec)**2;
+    return vec.x**2 + vec.y**2;
+}
+
 function myChangeDir(vec, angle){
 
 }
@@ -77,6 +85,10 @@ function myVecfromAngle(length, angle){
 
 function myRotateVec(vec, angle){
     return {x: vec.x * cos(angle)  - vec.y * sin(angle), y: vec.x * sin(angle) + vec.y * cos(angle)};
+}
+
+function myCrossProduct(vec1, vec2){
+    return vec1.x*vec2.y - vec1.y*vec2.x;
 }
 
 function clamp(x, min, max){
