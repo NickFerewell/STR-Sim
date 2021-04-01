@@ -47,7 +47,7 @@ function drawBackgroundUniverse(){
 				newX = x;
 				newY = y;
 			} else {
-				var starSpeed = relativeVelocity(myMult(referencePoint.velocity, parLayerSpeed), referencePoint.velocity * staticPointGamma);
+				var starSpeed = relativeVelocity(myMult(referencePoint.velocity, parLayerSpeed), referencePoint.velocity); //*staticPointGamma
 				var starGamma = 1 / Math.sqrt(1 - (myMagnitude(starSpeed)/c)**2);
 				var direction = myHeading(referencePoint.velocity);
 
@@ -69,7 +69,6 @@ function drawBackgroundUniverse(){
 
 				newX *= zoom
 				newY *= zoom
-
 				//Length, distance contraction
 				var tempCoords = myRotateVec({x: newX, y: newY}, -direction);
 				tempCoords.x /= starGamma;
