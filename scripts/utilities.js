@@ -87,6 +87,10 @@ function myCrossProduct(vec1, vec2){
     return vec1.x*vec2.y - vec1.y*vec2.x;
 }
 
+function myCopy(vec){
+    return {x: vec.x, y: vec.y};
+}
+
 function clamp(x, min, max){
     return Math.max(min, Math.min(x, max) );
 }

@@ -123,7 +123,6 @@ function keyPressed() {
     } else if (keyCode == 189 || keyCode == 109) { //- || numpad-
         keyboard.Minus = true;
     } else if (keyCode == 114){ //turn bounding 'F3'
-    cursor(ARROW);
         turnDebugMode(+!DEBUG_MODE);
     } else if (keyCode == 9){ //TAB
         keyboard.TAB = true;

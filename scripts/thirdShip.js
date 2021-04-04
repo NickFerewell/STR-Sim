@@ -30,6 +30,10 @@ class ThirdShip extends AnimationBody{
 		// this.interpolatedVelocityOld = this.interpolatedVelocity;
 		// this.interpolatedVelocity = vectorLerp2(this.interpolatedVelocityOld, this.body.velocity, 0.09);
 
+		// this.previousVelocity = mySub(this.body.positionPrev, this.positionPrevPrev);
+		// this.positionPrevPrev = this.body.positionPrev;
+		// console.log(this.positionPrevPrev, this.body.positionPrev, this.body.position)
+
 		if(keyboard.W || keyboard.upArrPressed){
 			this.isBoosting = true;
 		} else{
@@ -79,15 +83,17 @@ class ThirdShip extends AnimationBody{
 			var acc = myDiv(this.body.force, this.body.mass);
 			drawArrowWithName(createVector(width/2, height/2), myMult(acc, 500000), "g: " + (myMagnitude(acc) / Planet.gOnEarth).toFixed(2), "red", zoom) //Рисовать стрелку со значением g
 
-			var vel = relativeVelocity(this.body.velocity, selectedBody.body.velocity);
-			drawArrowWithName(createVector(width/2, height/2), myMult(vel, screenMaxFPS), "v: " + myMagnitude(vel).toFixed(2), "#39729d", zoom);
+			// var vel = rmath.vDiff(this.body.velocity, selectedBody.body.velocity);
+			var vel = rmath.sDiff(this.body.velocity, selectedBody.body.velocity);
+			var dir = myChangeMag(mySub(this.body.velocity, selectedBody.body.velocity), vel);
+			drawArrowWithName(createVector(width/2, height/2), myMult(dir, screenMaxFPS), "v: " + vel.toFixed(2), "#39729d", zoom);
 
 			push();
 			scale(1.5);
 			text("VrelativeToO: " + myMagnitude(this.body.velocity), 0, 10); //Сделать класс менеджера интерфейса
 			text("V/c: " + myMagnitude(this.body.velocity) / c, 0, 20);
 			text("StaticPntGamma: " + staticPointGamma, 0, 30);
-			text("Analog V: " + myMagnitude(this.previousVelocity), 0, 40);
+			text("Previous V: " + myMagnitude(this.previousVelocity), 0, 40); //Analog V previous
 
 			text("x: " + this.body.position.x, 0, 50)
 			text("y: " + this.body.position.y, 0, 60)
@@ -96,7 +102,8 @@ class ThirdShip extends AnimationBody{
 	}
 
 	applyForce(force){ //Для самой системы отсчёта другие правила
-		var acc = myDiv(mySub(force, myMult(this.body.velocity, myScalarMult(this.body.velocity, force)/(c**2))), this.body.mass * this.Gamma);
-		Matter.Body.applyForce(this.body, this.body.position, myMult(acc, this.body.mass));
+		// var acc = myDiv(mySub(force, myMult(this.body.velocity, myScalarMult(this.body.velocity, force)/(c**2))), this.body.mass * this.Gamma);
+		var acc = myDiv(mySub(force, myMult(this.body.velocity, myScalarMult(this.body.velocity, force)/(rmath.c2))), this.Gamma);
+		Matter.Body.applyForce(this.body, this.body.position, acc);
 	}
 }

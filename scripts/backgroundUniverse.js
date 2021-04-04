@@ -47,8 +47,10 @@ function drawBackgroundUniverse(){
 				newX = x;
 				newY = y;
 			} else {
-				var starSpeed = relativeVelocity(myMult(referencePoint.velocity, parLayerSpeed), referencePoint.velocity); //*staticPointGamma
-				var starGamma = 1 / Math.sqrt(1 - (myMagnitude(starSpeed)/c)**2);
+				// var starSpeed = relativeVelocity(myMult(referencePoint.velocity, parLayerSpeed), referencePoint.velocity);
+				var starSpeed = rmath.sDiff(myMult(referencePoint.velocity, parLayerSpeed), referencePoint.velocity);
+
+				var starGamma = 1 / Math.sqrt(1 - (starSpeed/c)**2);
 				var direction = myHeading(referencePoint.velocity);
 
 				var x = (-(referencePoint.position.x)*parLayerSpeed + element.x);

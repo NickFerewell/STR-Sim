@@ -60,17 +60,17 @@ function updateWorld(){
 
     if(isPaused == false){
 
-        Matter.Engine.update(engine)
-
-    	bodies.forEach(function(body){
-            body.update();
-        });
+        Matter.Engine.update(engine);
 
         stellarBodies.forEach( function(stellarBody) {
             bodies.forEach( function(body) {
                 if(stellarBody != body && body.type != "StellarBody")
                 stellarBody.attract(body.body);
             });
+        });
+
+    	bodies.forEach(function(body){
+            body.update();
         });
 
         PlanetarySystems.forEach( function(system, index) {
@@ -149,6 +149,9 @@ function windowResized() {
 function setC(newC){
     var oldC = c;
     c = newC;
+    c2 = c**2;
+    rmath.c = c;
+    rmath.c2 = c2;
     upperSpeed = c * upperSpeedPrecision;
     upperSpeedMinus = upperSpeed - 10  **(-numAllDigits(upperSpeed));
     console.log(upperSpeed);

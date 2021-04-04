@@ -14,6 +14,7 @@ var gameCanvas;
 var referenceBody;
 var G = 0.05; //0.05, 1
 var c = 12; //12, 30, 2, 4, 120, 60, 9
+var c2 = c ** 2;
 
 var maxGamma = 280; //10, 280, 2
 var renderMode = 2;
@@ -54,27 +55,6 @@ function mouseDragged(){
     false;
 }
 
-function relativeVelocity(VelOfTargetPoint, referencePointVel){
-    // var resultX = (VelOfTargetPoint.x - referencePointVel.x) / (1 - (VelOfTargetPoint.x*referencePointVel.x) / (c**2));
-    // var resultY = (VelOfTargetPoint.y - referencePointVel.y) / (1 - (VelOfTargetPoint.y*referencePointVel.y) / (c**2));
-
-    // return {x: resultX, y: resultY};
-
-    return myDiv(mySub(VelOfTargetPoint, referencePointVel), (1 - (myMagnitude(VelOfTargetPoint)*myMagnitude(referencePointVel))/(c**2)))
-}
-
-function relativeVelocity2(VelOfTargetPoint, referencePointVel, gammaOfTarget){ //Скорость объекта, который мы измеряем, относительно центра координат и скорость наблюдателя относительно центра координат. И лоренц-фактор объекта относительно центра координат
-    // return myMult(myAdd(mySub(referencePointVel, VelOfTargetPoint), myMult(myMult(VelOfTargetPoint, gammaOfTarget - 1), myScalarMult(VelOfTargetPoint, referencePointVel)/(myMagnitude(VelOfTargetPoint)**2)-1)), 1/(gammaOfTarget*(1-myScalarMult(VelOfTargetPoint, referencePointVel)/(c**2))));
-    // return myDiv(myAdd(mySub(VelOfTargetPoint, referencePointVel), (gammaOfTarget - 1)*myDiv(referencePointVel, myMagnitude(referencePointVel)**2)*(myScalarMult(referencePointVel, VelOfTargetPoint) - myMagnitude(referencePointVel)**2)), gammaOfTarget*(1-myScalarMult(referencePointVel, VelOfTargetPoint)/c**2));
-    return myDiv(myAdd(mySub(VelOfTargetPoint, referencePointVel), myMult(myDiv(referencePointVel, myMagnitude(referencePointVel)**2), (gammaOfTarget - 1) * (myScalarMult(referencePointVel, VelOfTargetPoint) - myMagnitude(referencePointVel)**2))), gammaOfTarget*(1-myScalarMult(referencePointVel, VelOfTargetPoint)/c**2));
-
-}
-
-function relativeSpeed(VelOfTargetPoint, referencePointVel){
-    // return Math.sqrt(1-(c**2- myMagnitude(VelOfTargetPoint)**2)*(c**2- myMagnitude(referencePointVel)**2)/((c**2- myScalarMult(VelOfTargetPoint, referencePointVel))**2))*c
-    return Math.sqrt((mySqrOfVec3(mySub(VelOfTargetPoint, referencePointVel)) - 1/(c**2) * myCrossProduct(VelOfTargetPoint, referencePointVel)**2), (1 - myScalarMult(referencePointVel, VelOfTargetPoint)/(c**2)))
-}
-
 function turnDebugMode(value){
     DEBUG_MODE = value;
     turnCursor(value);
@@ -89,4 +69,8 @@ function turnCursor(value){
         noCursor();
     }
 }
+
+
+
+
 

@@ -78,11 +78,44 @@ class AnimationBody extends SimpleBody{
 				translate(this.body.position.x, this.body.position.y);
 				translate(-camOffset.x, -camOffset.y);
 
+					//Distance contraction:
+		        var newB1 = myNormalize(this.relVel); //this.relVel, referenceBody.body.velocity
+		        var newB2 = {x: -newB1.y, y: newB1.x};
+
+		        var bMatrix = [
+		        [newB1.x, newB1.y],
+		        [newB2.x, newB2.y]];
+
+		        var revBMatrix = myFastReverseMatrix(bMatrix);
+
+		        var newRefBodyPos = myMatrixMultByVec(bMatrix, [referenceBody.body.position.x, referenceBody.body.position.y]);
+		        var newPos = myMatrixMultByVec(bMatrix, [this.body.position.x, this.body.position.y]);
+
+		        var deltaD = {x: (newPos[0] - newRefBodyPos[0])*(1-1*this.invGamma), y: 0}; //расстояние по оси параллельной скорости точки отсчёта
+
+		        var oldDeltaD = myMatrixMultByVec(revBMatrix, [deltaD.x, deltaD.y]);
+
+		        translate(-oldDeltaD[0] * zoom, -oldDeltaD[1] * zoom);
+
+
+
+
 				translate((this.body.position.x - referenceBody.body.position.x)*(zoom-1), (this.body.position.y - referenceBody.body.position.y)*(zoom-1));
-				rotate(figureToRender.angle + this.body.angle);
+				rotate(figureToRender.angle + this.body.angle)
 				translate((this.shift.x * this.scale.x + figureToRender.position.x) * zoom, (this.shift.y * this.scale.y + figureToRender.position.y) * zoom);
 
 				scale(zoom, zoom);
+
+				  	//Length contraсtion:
+		        rotate(myHeading(this.relVel));
+		        scale(1*this.invGamma, 1);
+		        rotate(-myHeading(this.relVel));
+
+		        
+		        // rotate(figureToRender.angle + this.body.angle);
+
+
+
 				if(figureToRender.fill){
 					fill(figureToRender.color);
 				} else {
