@@ -35,7 +35,10 @@ class AnimationBody extends SimpleBody{
 		};
 
 		World.add(world, this.body);
-		Matter.Body.setCentre(this.body, this.body.position)
+		// Matter.Vertices.translate(this.body.vertices, myMult(mySub(this.body.position, Matter.Vertices.centre(this.body.vertices)), 1));
+		Matter.Vertices.translate(this.body.vertices, mySub(this.body.position, Matter.Vertices.centre(this.body.vertices)))
+		// Matter.Body.setCentre(this.body, Matter.Vertices.centre(this.body.vertices));
+		console.log(this.body.position, Matter.Vertices.centre(this.body.vertices))
 		console.log(this.parts)
 	}
 
@@ -154,6 +157,10 @@ class AnimationBody extends SimpleBody{
 						text("there is no geometry", 0, 0)
 						break;
 				}
+				
+				// circle(0, 0, 5);
+				// fill(this.body.render.fillStyle);
+				// stroke(117);
 
 				pop();
 			}

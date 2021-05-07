@@ -1,59 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Relativity Simulation Game(?)</title>
+    <title>Relativity Sim</title> <!-- Relativity Simulation Game(?) -->
     
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8">
-    <meta name="gameVersion" content="0.1.1.1"> <!-- major, minor, bugfix(revision) -->
-    <link rel="shortcut icon" type="image/svg" href="Asteroid-2.svg">
+    <meta name="gameVersion" content="0.1.2"> <!-- major, minor, bugfix(revision) -->
+    <link rel="shortcut icon" type="image/svg" href="Spaceship icon 2.svg">
+
+    <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script> -->
+    <script src="https://kit.fontawesome.com/d1368c233b.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="MenuStyle.css">
+
+  <!-- game scripts -->
+    <!-- libs -->
+      <script language="javascript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/p5@1.1.4/lib/p5.min.js"></script>
+      <script type="text/javascript" src="libs\decomp.js">window.decomp = decomp;</script>
+      <script type="text/javascript" src="libs\matter.js"></script>
+      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+    <!-- scripts -->
+      <script type="text/javascript" src="scripts\input.js"></script>
+      <script type="text/javascript" src="scripts\utilities.js"></script>
+      <script type="text/javascript" src="scripts\rmath.js"></script>
+      <script type="text/javascript" src="scripts\world.js"></script>
+      <script type="text/javascript" src="scripts\main.js"></script>
+      <script type="text/javascript" src="scripts\backgroundUniverse.js"></script>
+      <script type="text/javascript" src="scripts\newGeometries.js"></script>
+      <script type="text/javascript" src="scripts\simpleBody.js"></script>
+      <script type="text/javascript" src="scripts\box.js"></script>
+      <script type="text/javascript" src="scripts\circle.js"></script>
+      <script type="text/javascript" src="scripts\ground.js"></script>
+      <script type="text/javascript" src="scripts\stellarBody.js"></script>
+      <script type="text/javascript" src="scripts\planet.js"></script>
+      <script type="text/javascript" src="scripts\emptyObj.js"></script>
+      <script type="text/javascript" src="scripts\planetarySystem.js"></script>
+      <script type="text/javascript" src="scripts\rover.js"></script>
+      <script type="text/javascript" src="scripts\animationBody.js"></script>
+      <script type="text/javascript" src="scripts\thirdShip.js"></script>
+
+    
   </head>
   <body> 
 
-  <!-- libs -->
-    <script language="javascript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/p5@1.1.4/lib/p5.min.js"></script>
-    <script type="text/javascript" src="libs\decomp.js">window.decomp = decomp;</script>
-    <script type="text/javascript" src="libs\matter.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-  <!-- scripts -->
-    <script type="text/javascript" src="scripts\input.js"></script>
-    <script type="text/javascript" src="scripts\utilities.js"></script>
-    <script type="text/javascript" src="scripts\rmath.js"></script>
-    <script type="text/javascript" src="scripts\world.js"></script>
-    <script type="text/javascript" src="scripts\main.js"></script>
-    <script type="text/javascript" src="scripts\backgroundUniverse.js"></script>
-    <script type="text/javascript" src="scripts\newGeometries.js"></script>
-    <script type="text/javascript" src="scripts\simpleBody.js"></script>
-    <script type="text/javascript" src="scripts\box.js"></script>
-    <script type="text/javascript" src="scripts\circle.js"></script>
-    <script type="text/javascript" src="scripts\ground.js"></script>
-    <script type="text/javascript" src="scripts\stellarBody.js"></script>
-    <script type="text/javascript" src="scripts\planet.js"></script>
-    <script type="text/javascript" src="scripts\emptyObj.js"></script>
-    <script type="text/javascript" src="scripts\planetarySystem.js"></script>
-    <script type="text/javascript" src="scripts\rover.js"></script>
-    <script type="text/javascript" src="scripts\animationBody.js"></script>
-    <script type="text/javascript" src="scripts\thirdShip.js"></script>
+  <div id="content">
 
-    <script>
-      document.gameVersion = document.querySelector('meta[name="gameVersion"]').content;
+    <span id="slide" class="slide">
+      <a href="#" onclick="openSlideMenu()">
+        <i class="fas fa-bars"></i>
+      </a>
+    </span>
 
-      window.addEventListener('contextmenu', function(e){
-        e.preventDefault();
-      }, false);
+    <div id="menu" class="nav">
+      <a href="#" class="close" onclick="closeSlideMenu()">
+        <i class="fas fa-times"></i>
+      </a>
+      <a class="menu-offset-top">γ</a>
+<!--       <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Portfolio</a>
+      <a href="#">Contact</a> -->
+      <div class="section-header">
+        
+      </div>
+      <iframe src="menu contents/list of lectures.html" name="advices" scrolling="auto" marginwidth="0" marginheight="0" paddingwidth="0" hspace="0" vspace="0" frameborder="0"></iframe>
 
-      //Скриншот на F1
-      function saveScreenshot(){
-        console.log("processing screenshot");
-        var dataURL = gameCanvas.toDataURL("image/png"); //image/jpeg
-        var link = document.createElement("a");
-        document.body.appendChild(link); // Firefox requires the link to be in the body :(
-        link.href = dataURL;
-        link.download = "screenshot.png"; //.jpg
-        link.click();
-        document.body.removeChild(link);
-      }
+      <a class="contact" href="https://github.com/NickFerewell/STR-Sim">
+        <!-- <i  class="fa fa-user-circle-o"></i> -->
+        <i  class="fa fa-github"></i>
+      </a>
+    </div>
 
-    </script>
+    <!-- <canvas></canvas> -->
+
+    <div id="dialogBox">
+      <div id="dialogTitle"> <a>Title of this dialog</a></div>
+       <a id="close" onclick="closeSlideMenu()">X</a>
+    </div>
+
+  </div>
+  <script src="PageLogic.js"></script>
   </body>
 </html>

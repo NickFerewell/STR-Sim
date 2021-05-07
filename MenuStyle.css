@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans:800');
+
+body {
+	font-family: 'Alegreya Sans', sans-serif;
+	overflow-x: hidden;
+}
+.nav {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	background-color: #111;
+	opacity: .9;
+	overflow-x: hidden;
+	/*overflow-y: hidden;*/
+	/*padding-top: 60px;*/
+	transition: 0.7s;
+}
+.nav a {
+	display: block;
+	padding: 20px 30px;
+	font-size: 25px;
+	text-decoration: none;
+	color: #ccc;
+}
+.nav a:hover {
+	color: #fff;
+	transition: 0.4s;
+}
+.nav .menu-offset-top{
+	font-size: 42px;
+	padding-left: 30px; /*25px*/
+	padding-top: 0;
+	font-family: "times new roman"
+}
+.nav .close {
+	position: absolute;
+	top: 0;
+	right: 0px;
+	margin-left: 50px;
+	font-size: 30px;
+	padding: 15;
+}
+.slide a {
+	color: #000;
+	font-size: 36px;
+}
+.slide{
+	position: absolute;
+	top: 0;
+	left: 0px;
+	margin: 15px;
+	transition: 0.4s;
+
+}
+#content {
+	/*padding: 20px;*/
+	transition: margin-left 0.7s;
+	overflow: hidden;
+	width: 100%;
+	/*position: relative;*/
+	/*height: 0px;*/
+	/*user-select: none;*/
+
+}
+
+iframe{
+	border-width: 2px;
+	border-radius: 8px;
+	border-style: none;
+	margin-right: 0;
+	/*margin-top: 40px;*/
+	/*border-color: grey;*/
+	/*padding-right: -20px;*/
+	/*margin: 0;*/
+	/*margin-right: 20px;*/
+	display: block;
+	/*width: 98%;*/
+	/*padding-left: 20px;*/
+	/*padding-right: 1%;*/
+	height: 86%;
+	width: 100%;
+	/*overflow: hidden;*/
+}
+.nav .contact{
+	position: absolute;
+	/*right: 3px;*/
+	bottom: 0px;
+	/*margin-left: 0px;*/
+	font-size: 30px;
+}
+canvas{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+.section-header {
+	position: relative;
+	text-align: center;
+}
+.section-header:before {
+	content: '';
+	z-index: 1;
+
+	position: absolute;
+	left: 0;
+	top: 50%;
+	transform: translateY(-50%);
+
+	width: 100%;
+	height: 1px;
+
+	background: #dddddd;
+}

@@ -52,7 +52,7 @@ class SimpleBody{
         scale(1*this.invGamma, 1);
         rotate(-myHeading(this.relVel)); //referenceBody.interpolatedVelocity
 		
-		circle(0, 0, 5);
+		// circle(0, 0, 5);
 		fill(this.body.render.fillStyle);
 		stroke(117);
 
@@ -288,8 +288,8 @@ class SimpleBody{
         // this.body.position.y += this.body.velocity.y * (this.Gamma - 1);
         // this.body.timeScale *= this.Gamma;
         // Matter.Body.setPosition(this.body, myAdd(this.body.position, myMult(this.relVel, (this.Gamma - 1)))); //Когда включено нивилирует сокращение расстояний(почему?)
-		Matter.Body.setPosition(this.body, myAdd(this.body.position, myMult(this.body.velocity, (this.staticPointGamma - 1))));
-
+		// Matter.Body.setPosition(this.body, myAdd(this.body.position, myMult(this.body.velocity, (this.staticPointGamma - 1))));
+		Matter.Body.translate(this.body, myMult(this.body.velocity, (this.staticPointGamma - 1)));
 
 		// this.positionPrevPrev = myCopy(this.positionPrev);
 		this.positionPrev = myCopy(this.body.positionPrev);

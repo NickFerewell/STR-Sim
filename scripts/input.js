@@ -25,12 +25,14 @@ var keyboard = {
     P: false,
     controlPressed: false,
     F1: false,
-    c: false
+    c: false,
+    F2: false,
 };
 
 var SHOW_CURSOR;
+var DRAW_GUI = true;
 var DEBUG_MODE;
-var IS_PAUSED = false;
+// var IS_PAUSED = false;
 var zoom = 1; //0.5, 1, 0.425
 var screenMaxFPS = 60;
 var currentFPS;
@@ -91,6 +93,8 @@ function keyReleased() {
         keyboard.controlPressed = false;
     } else if(keyCode == 112){ // F1 - делает скриншот
         keyboard.F1 = false;
+    } else if(keyCode == 113){ // F2 - вкл./выкл. интерфейс
+        keyboard.F2 = false;
     } else if(keyCode == 67){ // C - мгновенно переворачивает корабль
         keyboard.c = false;
     }
@@ -139,6 +143,10 @@ function keyPressed() {
     } else if(keyCode == 112){ // F1 - делает скриншот
         keyboard.F1 = true;
         saveScreenshot();
+    } else if(keyCode == 113){ // F2 - вкл./выкл. интерфейс
+        keyboard.F2 = true;
+        DRAW_GUI = !DRAW_GUI;
+        turnOnOffSliderButton();
     } else if(keyCode == 67){ // C - мгновенно переворачивает корабль
         keyboard.c = true;
         Matter.Body.setAngle(referenceBody.body, referenceBody.body.angle + Math.PI);
