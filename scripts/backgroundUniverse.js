@@ -1,9 +1,9 @@
 var backgroundUniverse = []; //массив слоёв паралакса заднего фона
 var layersNum = 4;
-var backUniverseSize = 5; //5, 1/minZoom?
+var backUniverseSize = 4; //5, 1/minZoom?, 1.5, 4
 var starSize = 1; //1, 1.5, 8, 2
-var starCount = backUniverseSize * 16 * 2 * 1.5;
-var parallaxSpeed = 0.9; //0.9, 0.3, 0.1
+var starCount = backUniverseSize * 70; //backUniverseSize * 16 * 2 * 1.5,  backUniverseSize * 100
+var parallaxSpeed = 0.4; //0.9, 0.3, 0.1
 var backUniverseSizeW;
 var backUniverseSizeH;
 

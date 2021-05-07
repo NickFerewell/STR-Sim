@@ -7,7 +7,7 @@ p{
 	padding-top: 0;
 	font-size: 20px;
 	/*text-decoration: none;*/
-	margin: 0;
+	margin-top: 0;
 	color: #ccc;
 }
 body {
@@ -48,3 +48,13 @@ a:hover {
 	top: 10;
 	left: 10;
 }
+
+significant{
+	/*background-color: #A8A608;*/ /*#00F02B, #A8A608*/
+	border-style: solid;
+	border-width: 2px; /* 3px*/
+	border-radius: 2px;
+	/*min-width: 20px;*/
+}
+
+span.nobr { white-space: nowrap; }

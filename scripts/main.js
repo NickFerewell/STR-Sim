@@ -47,15 +47,16 @@ function draw(){ //main loop
 }
 
 function mouseDragged(){
-    switch (mouseButton) {
-        case LEFT:
-            new Box((mouseX - width/2)/zoom + referenceBody.body.position.x, (mouseY - height/2)/zoom + referenceBody.body.position.y, random(10, 40), random(10, 40), 0, 0);
-            break;
-        case RIGHT:
-            new AnimationBody((mouseX - width/2)/zoom + referenceBody.body.position.x, (mouseY - height/2)/zoom + referenceBody.body.position.y, newGeometries.testObject1);
-            break;
+    if(DEBUG_MODE){
+        switch (mouseButton) {
+            case LEFT:
+                new Box((mouseX - width/2)/zoom + referenceBody.body.position.x, (mouseY - height/2)/zoom + referenceBody.body.position.y, random(10, 40), random(10, 40), 0, 0);
+                break;
+            case RIGHT:
+                new AnimationBody((mouseX - width/2)/zoom + referenceBody.body.position.x, (mouseY - height/2)/zoom + referenceBody.body.position.y, newGeometries.testObject1);
+                break;
+        }
     }
-    
     false;
 }
 
@@ -107,6 +108,14 @@ function drawGUI(){
     vertex(-10, 10)
     endShape(CLOSE);
     pop();
+}
+
+function pauseGame(){
+    isPaused = true
+}
+
+function unpauseGame(){
+    isPaused = false;
 }
 
 

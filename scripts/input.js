@@ -150,9 +150,12 @@ function keyPressed() {
     } else if(keyCode == 67){ // C - мгновенно переворачивает корабль
         keyboard.c = true;
         Matter.Body.setAngle(referenceBody.body, referenceBody.body.angle + Math.PI);
+    } else if(keyCode == 27 || keyCode == 77){ //Escape и M для открытия меню
+        turnSlideMenu();
+        console.log("turning");
     }
 
-    if(keyCode != 116 && keyCode != 123){ //116-f5, 123-f12, 
+    if(keyCode != 116 && keyCode != 122 && keyCode != 123){ //116-f5, 122 - f11, 123-f12, 
         return false;
     }
   }

@@ -19,14 +19,27 @@ function turnOnOffSliderButton(){ //open menu button
 
 //Side-menu logic
 function openSlideMenu(){
-        document.getElementById('menu').style.width = '30%';
-        // document.getElementById('content').style.marginLeft = '30%'; //250px
-        document.getElementById("slide").style.opacity = "0";
-      }
+	document.getElementById('menu').style.width = '30%';
+	// document.getElementById('content').style.marginLeft = '30%'; //250px
+	document.getElementById("slide").style.opacity = "0";
+	pauseGame();
+}
 function closeSlideMenu(){
-        document.getElementById('menu').style.width = '0';
-        // document.getElementById('content').style.marginLeft = '0';
-        document.getElementById("slide").style.opacity = "1";
+    document.getElementById('menu').style.width = '0';
+    // document.getElementById('content').style.marginLeft = '0';
+    document.getElementById("slide").style.opacity = "1";
+    unpauseGame();
+}
+
+function turnSlideMenu(){
+	var width = document.getElementById('menu').style.width;
+	console.log(width)
+	if(width == "0px" || width == "0" || width == ""){
+		openSlideMenu();
+	} else {
+		closeSlideMenu();
+	}
+	console.log("hfh")
 }
 
 document.gameVersion = document.querySelector('meta[name="gameVersion"]').content;
@@ -52,12 +65,11 @@ function displayDialog(speechID = 0){ //dialogID
 	// box.style.display = "block";
 	box.style["pointer-events"] = "all";
 	box.style.opacity = "0.9";
-	isPaused = true;
+	pauseGame();
 }
-displayDialog();
 function closeDialog(){
 	var box = document.getElementById("dialogBox");
 	box.style["pointer-events"] = "none";
 	box.style.opacity = "0";
-	isPaused = false;
+	unpauseGame();
 }
