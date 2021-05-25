@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="utf-8">
     <meta name="gameVersion" content="0.1.2"> <!-- major, minor, bugfix(revision) -->
-    <link rel="shortcut icon" type="image/svg" href="Spaceship icon 2.svg">
+    <link rel="shortcut icon" type="image/svg" href="images/Spaceship icon 2.svg">
 
     <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script> -->
     <script src="https://kit.fontawesome.com/d1368c233b.js" crossorigin="anonymous"></script>
@@ -37,6 +37,7 @@
       <script type="text/javascript" src="scripts\rover.js"></script>
       <script type="text/javascript" src="scripts\animationBody.js"></script>
       <script type="text/javascript" src="scripts\thirdShip.js"></script>
+      <script type="text/javascript" src="scripts/speeches.js"></script>
 
   </head>
   <body> 
@@ -73,10 +74,21 @@
     <!-- <canvas></canvas> -->
 
     <div id="dialogBox">
-      <div id="dialogTitle"> <a>Title of this dialog</a></div>
-       <a href="#" id="close" onclick="closeDialog()"><i class="fas fa-times"></i></a>
+      <div id="dialogTitle">Title of this dialog</div>
+      <div id=closeContainer>
+        <a href="#" id="close" onclick="closeDialog()"><i class="fas fa-times"></i></a>
+      </div>
+      
+      <div id="dialogName"> Name of this dialog</div>
+      <div id="dialogText">Test text text test test text text test test text text test test text text test test text text test test text text test test text text test test text text test test text text test test text text test test text</div>
+      <div id="dialogPreview">
+        <!-- <img src="images/Asteroid-2.svg"> -->
+      </div>
     </div>
 
+    <!-- <div id="speedometer">
+      <img src="images/speedArrow2.svg">
+    </div> -->
   </div>
   <script src="PageLogic.js"></script>
   </body>

@@ -27,6 +27,7 @@ var keyboard = {
     F1: false,
     c: false,
     F2: false,
+    anyKeyPressed: false,
 };
 
 var SHOW_CURSOR;
@@ -154,6 +155,8 @@ function keyPressed() {
         turnSlideMenu();
         console.log("turning");
     }
+
+    keyboard.anyKeyPressed = true;
 
     if(keyCode != 116 && keyCode != 122 && keyCode != 123){ //116-f5, 122 - f11, 123-f12, 
         return false;

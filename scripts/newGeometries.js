@@ -4,7 +4,7 @@ const newGeometries = {
 		// scale: {x: 1, y: 1},
 		shapes: [
 		{
-			angle: -0.785, scale: {x: 1, y: 1}, position: {x: 0, y: 0}, type: "concave line", label: "body", isPhysical: true, isRendering: false,
+			angle: -0.785, scale: {x: 1, y: 1}, position: {x: 3, y: -3}, type: "concave line", label: "body", isPhysical: true, isRendering: true,
 			fill: true, color: "#f5d259"/*"white"*/, outline: 144, stroke: 1, 
 			// vertexes: [[1,0],[1,1],[0,1],[0,0],[-1,0],[-1,-1]]
 			vertexes: [

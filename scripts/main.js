@@ -41,6 +41,10 @@ function draw(){ //main loop
     drawWorld();
 
     if(DRAW_GUI) drawGUI();
+    /* Из-за большого количества изменений стиля, его пересчёта пришлось от этого варианта отказаться
+    speedometer.moveArrow(map(myMagnitude(referenceBody.body.velocity)**2, 0, rmath.c**2, 0, Math.PI/2));
+    speedometer.update();
+    */
 
     currentFPS = (1000 / (thisLoop - lastLoop)).toFixed(0); //FPS на предыдушем кадре
     lastLoop = thisLoop;
@@ -84,9 +88,11 @@ function drawGUI(){
     push();
     translate(width - 20, height - 20);
     scale(1.5);
+    /*
     rect(-63, -133, 60, 18);
     textAlign(RIGHT);
     text("Быстрота", -6, -120); //Quadratic rapidity, быстрота, спидометр, скорость
+    */
     // arc(0, 0, 220, 220, -PI, -PI/2);
     arc(20, 20, 270, 270, -PI, -PI/2);
     // textAlign(LEFT);
@@ -117,8 +123,3 @@ function pauseGame(){
 function unpauseGame(){
     isPaused = false;
 }
-
-
-
-
-
