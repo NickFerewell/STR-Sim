@@ -1,0 +1,1 @@
+C:\Users\nikit.DESKTOP-2GRDQ4H\Downloads\nwjs-v0.59.1-win-x64\nwjs-v0.59.1-win-x64\nw.exe --nwapp .\STR-Sim

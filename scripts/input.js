@@ -172,6 +172,9 @@ function keyPressed() {
 
 
 function changeZoom(dir, mult = 1){
+    if(zoom === undefined || zoom === NaN){
+        zoom = 1;
+    }
     zoom = clamp(zoom + dir * zoomDelta * mult, minZoom, maxZoom);
 }
 

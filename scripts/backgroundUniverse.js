@@ -31,10 +31,8 @@ function drawBackgroundUniverse(){
 	for (var i = 0; i < backgroundUniverse.length; i++) {
 
 		backgroundUniverse[i].forEach( function(element, index) { 
-			colorMode(HSB);
-			fill(100 * element.brightness, 40, 15 * element.brightness);
-			noStroke();
-			var parLayerSpeed = parallaxSpeed / (i + 1 + element.parLayerShift);
+			var starParallaxHeight = i + element.parLayerShift; //Удаление звезды от корабля по оси Z, влияющее на параллакс.
+			var parLayerSpeed = parallaxSpeed / (starParallaxHeight + 1);
 
 			var newX = 0;
 			var newY = 0;
@@ -51,7 +49,7 @@ function drawBackgroundUniverse(){
 				var starSpeed = rmath.sDiff(myMult(referencePoint.velocity, parLayerSpeed), referencePoint.velocity);
 
 				var starGamma = 1 / Math.sqrt(1 - (starSpeed/c)**2);
-				var direction = myHeading(referencePoint.velocity);
+				var direction = myHeading(referencePoint.velocity); //Это надо переместить вне forEach, для каждой звезды заново это считать не надо, да и скорость в это время не меняется.
 
 				var x = (-(referencePoint.position.x)*parLayerSpeed + element.x);
 				var y = (-(referencePoint.position.y)*parLayerSpeed + element.y);
@@ -83,7 +81,28 @@ function drawBackgroundUniverse(){
 			}
 			
 			var size = clamp(element.brightness * starSize * zoom, 0.32 * element.brightness * 2, 1000);
-			circle(newX, newY, size);
+
+			//Color and drawing ->
+			colorMode(HSB);
+
+			//circle stars without stretching
+			/*fill(100 * element.brightness, 40, 15 * element.brightness);
+			noStroke();
+			circle(newX, newY, size);*/
+
+			//stars that stretch into lines like in Star Wars or Elite:Dangerous
+			stroke(100 * element.brightness, 40, 15 * element.brightness);
+			strokeWeight(size);
+			var dir = myHeading(referencePoint.velocity);
+			var starSpeed = rmath.sDiff(myMult(referencePoint.velocity, parLayerSpeed), referencePoint.velocity);
+			var starGamma = 1 / Math.sqrt(1 - (starSpeed/c)**2);
+			// var starStretchLength = starParallaxHeight * size * starGamma;
+			line(newX, newY, newX + cos(dir) * starSpeed * starGamma, newY + sin(dir) * starSpeed * starGamma);
+
+			//Stretching via scale ->(not working)
+			/*scale(cos(dir)*starStretchLength + 1, sin(dir)*starStretchLength + 1);
+			circle(newX, newY, size);*/
+
 		});
 	}
 	pop()
